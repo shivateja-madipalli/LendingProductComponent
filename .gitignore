@@ -1,0 +1,7 @@
+.DS_Store
+.readme.md
+dist
+previous component.js
+previoud reducer.js
+.gitignore
+node_modules
