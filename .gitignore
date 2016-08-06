@@ -1,7 +1,5 @@
 .DS_Store
 .readme.md
 dist
-previous_component.js
-previoud_reducer.js
 .gitignore
 node_modules
