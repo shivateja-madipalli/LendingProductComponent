@@ -7,7 +7,7 @@ let Select = require('react-select');
 let LPFields = require('../data/LendingProductPageFields');
 
 //importing commonStyles
-// import commonStyles from './styles/commonStyles';
+// let commonCss = require('../styles/commonCss.js');
 
 const lendingProduct = React.createClass({
 
@@ -41,14 +41,33 @@ const lendingProduct = React.createClass({
 
   */
 
+
   getInitialState() {
+    console.log('the Keys:', Object.keys(LPFields.default));
+    let LPFieldsArray = Object.keys(LPFields.default);
+    let completedData = {
+      completed: [],
+      allData: {
+
+      }
+    };
+    console.log(LPFieldsArray.length);
+    LPFieldsArray.map(function(individualPage) {
+      completedData.completed.push (
+        {
+          'FieldName' : individualPage,
+          'value' : false
+        }
+      );
+    });
     return {
       basicData : {},
       interestData : {},
       accountingData : {},
-      allEnterData : {},
+      allEnterData : completedData,
       isLoading : true,
-      reRenderElements : false
+      reRenderElements : false,
+      currentPage: ""
     }
   },
 
@@ -64,55 +83,67 @@ const lendingProduct = React.createClass({
   },
 
   componentWillReceiveProps(NextProps) {
-    console.log('componentWillReceiveProps', NextProps);
-    NextProps.existinglendingProducts.basicData.then(function(data) {
-      // console.log('DATA FROM CMP PROPS', data);
-      this.setState({
-        basicData : data,
-        interestData : this.state.interestData,
-        accountingData : this.state.accountingData,
-        allEnterData : this.state.allEnterData,
-        isLoading: false,
-        reRenderElements : true
-      })
-    }.bind(this));
+    // console.log('componentWillReceiveProps', NextProps);
+    if(NextProps.existinglendingProducts.basicData) {
+      NextProps.existinglendingProducts.basicData.then(function(data) {
+        // console.log('DATA FROM CMP PROPS', data);
+        this.setState({
+          basicData : data,
+          interestData : this.state.interestData,
+          accountingData : this.state.accountingData,
+          allEnterData : this.state.allEnterData,
+          isLoading: false,
+          reRenderElements : true,
+          currentPage: this.state.currentPage
+        })
+      }.bind(this));
+    }
 
-    NextProps.existinglendingProducts.interestData.then(function(data) {
-      // console.log('INTEREST DATA FROM CMP PROPS', data);
-      this.setState({
-        basicData : this.state.basicData,
-        interestData : data,
-        accountingData : this.state.accountingData,
-        allEnterData : this.state.allEnterData,
-        isLoading: false,
-        reRenderElements : true
-      })
-    }.bind(this));
+    if(NextProps.existinglendingProducts.interestData) {
+      NextProps.existinglendingProducts.interestData.then(function(data) {
+        // console.log('INTEREST DATA FROM CMP PROPS', data);
+        this.setState({
+          basicData : this.state.basicData,
+          interestData : data,
+          accountingData : this.state.accountingData,
+          allEnterData : this.state.allEnterData,
+          isLoading: false,
+          reRenderElements : true,
+          currentPage: this.state.currentPage
+        })
+      }.bind(this));
+    }
 
-    NextProps.existinglendingProducts.accountingData.then(function(data) {
-        console.log('ACCOUNTING DATA FROM CMP PROPS', data);
-      this.setState({
-        basicData : this.state.basicData,
-        interestData : this.state.interestData,
-        allEnterData : this.state.allEnterData,
-        accountingData : data,
-        isLoading: false,
-        reRenderElements : true
-      })
-    }.bind(this));
+    if(NextProps.existinglendingProducts.accountingData) {
+        NextProps.existinglendingProducts.accountingData.then(function(data) {
+          console.log('ACCOUNTING DATA FROM CMP PROPS', data);
+        this.setState({
+          basicData : this.state.basicData,
+          interestData : this.state.interestData,
+          allEnterData : this.state.allEnterData,
+          accountingData : data,
+          isLoading: false,
+          reRenderElements : true,
+          currentPage: this.state.currentPage
+        })
+      }.bind(this));
+    }
 
-    NextProps.existinglendingProducts.confirmationFromSFAfterInsertingLoan.then(function(data) {
-        console.log('SUBMIT FORM DATA FROM CMP PROPS', data);
-      this.setState({
-        basicData : this.state.basicData,
-        interestData : this.state.interestData,
-        allEnterData : this.state.allEnterData,
-        accountingData : this.state.accountingData,
-        isLoading: this.state.isLoading,
-        reRenderElements : this.state.reRenderElements,
-        confirmationFromSFAfterInsertingLoan : data
-      })
-    }.bind(this));
+    if(NextProps.existinglendingProducts.confirmationFromSFAfterInsertingLoan) {
+      NextProps.existinglendingProducts.confirmationFromSFAfterInsertingLoan.then(function(data) {
+          console.log('SUBMIT FORM DATA FROM CMP PROPS', data);
+        this.setState({
+          basicData : this.state.basicData,
+          interestData : this.state.interestData,
+          allEnterData : this.state.allEnterData,
+          accountingData : this.state.accountingData,
+          isLoading: this.state.isLoading,
+          reRenderElements : this.state.reRenderElements,
+          confirmationFromSFAfterInsertingLoan : data,
+          currentPage: this.state.currentPage
+        })
+      }.bind(this));
+    }
 
   },
 
@@ -123,6 +154,10 @@ const lendingProduct = React.createClass({
 
   componentDidUpdate() {
     console.log('componentDidUpdate');
+    // div show
+    // LPFields.default[thisVal.state.currentPage]
+    // $('#' + LPFields.default['AllPages'][0] + '_MainDiv').show();
+    $('#' + LPFields.default.AllPages[0] + '_MainDiv').addClass('displayBlock').removeClass('displayNone');
   },
 
   shouldComponentUpdate() {
@@ -134,476 +169,6 @@ const lendingProduct = React.createClass({
   },
 
   render() {
-    // console.log('RENDERING!');
-    // // THIRD
-    // let self = this;
-    //
-    // const { existinglendingProducts } = this.props;
-    // console.log('existinglendingProducts in testCMP ', existinglendingProducts);
-    // if(!this.state.isLoading)
-    //
-    // {
-    //   let billingMethod = this.processPickListValues(this.state.basicData, 'billingMethodBasicsPage', 'Billing Method', this);
-    //   return (
-    //     <div id="LendingProductCmpMainDiv" className="paddingZero marginZero width100 height100">
-    //       <div id="leftDiv" className="floatLeft paddingZero marginZero width70 heightAuto displayTrue">
-    //         <div id="leftDiv_TOP" className="paddingZero marginZero width100 heightAuto">
-    //           <h4  className="paddingZero marginZero">Select Lending Product Type</h4>
-    //
-    //           <button id="nextBtn" onClick={this.existingLendingProductSelected}>Next</button>
-    //           <label id="errorMessage" className="displayFalse"></label>
-    //         </div>
-    //
-    //         <div id="leftDiv_BOTTOM" className="paddingZero marginZero width100 heightAuto">
-    //           <h4 className="paddingZero marginZero">Existing Lending Products</h4>
-    //         </div>
-    //
-    //       </div>
-    //       <div id="creatingNewLendingProduct" className="floatLeft paddingZero marginZero width70 heightAuto displayFalse">
-    //         <h4 className="paddingZero marginZero"> creatingNewLendingProduct </h4>
-    //         <ul className="ulNoBulletPoint paddingZero">
-    //           <li>
-    //             <form id="profileForm">
-    //
-    //               <h4>Profile</h4>
-    //               <table>
-    //                 <tr>
-    //                   <td>
-    //                     Loan Product Name
-    //                   </td>
-    //                   <td>
-    //                     <input type="text" name="loanProductName" />
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Billing Method
-    //                   </td>
-    //                   <td>
-    //                     {billingMethod}
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Payment Frequency
-    //                   </td>
-    //                   <td>
-    //                   <select>
-    //                     <option value="daily">Daily</option>
-    //                     <option value="weekly">Weekly</option>
-    //                     <option value="biWeekly">Bi Weekly</option>
-    //                     <option value="semiMonthly">Semi Monthly</option>
-    //                     <option value="monthly">Monthly</option>
-    //                     <option value="biMonthly">Bi Monthly</option>
-    //                     <option value="quarterly">Quartely</option>
-    //                     <option value="semiAnnual">Semi Annual</option>
-    //                     <option value="annual">Annual</option>
-    //                     <option value="singlePmt">Single Pmt</option>
-    //                     <option value="semiMonthlyPD">Semi Monthly PD</option>
-    //                   </select>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     THe Counting Method
-    //                   </td>
-    //                   <td>
-    //                   <select>
-    //                     <option value="volvo">Volvo</option>
-    //                     <option value="saab">Saab</option>
-    //                     <option value="mercedes">Mercedes</option>
-    //                     <option value="audi">Audi</option>
-    //                   </select>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Accural Start Basis
-    //                   </td>
-    //                   <td>
-    //                   <select>
-    //                     <option value="volvo">Volvo</option>
-    //                     <option value="saab">Saab</option>
-    //                     <option value="mercedes">Mercedes</option>
-    //                     <option value="audi">Audi</option>
-    //                   </select>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Payment Application Mode
-    //                   </td>
-    //                   <td>
-    //                   <select>
-    //                     <option value="volvo">Volvo</option>
-    //                     <option value="saab">Saab</option>
-    //                     <option value="mercedes">Mercedes</option>
-    //                     <option value="audi">Audi</option>
-    //                   </select>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Interest Only Period
-    //                   </td>
-    //                   <td>
-    //                     <input type="text" name="interestOnlyPeriod"/>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Actual Interest Only Payments
-    //                   </td>
-    //                   <td>
-    //
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Interest Only Period
-    //                   </td>
-    //                   <td>
-    //                     <input type="text" name="interestOnlyPeriod"/>
-    //                   </td>
-    //                 </tr>
-    //               </table>
-    //             </form>
-    //           </li>
-    //
-    //           <li>
-    //             <form id="feesForm">
-    //               <h4>Fees</h4>
-    //               <input type="radio" /> Choose Existing Fee Set
-    //               <input type="radio" /> Create New Fee Set
-    //             </form>
-    //           </li>
-    //
-    //           <li>
-    //             <form id="termForm">
-    //               <h4>Term</h4>
-    //               <table>
-    //                 <tr>
-    //                   <td>
-    //                     Min Term
-    //                   </td>
-    //                   <td>
-    //                     <input type="text" name="minTerm"/>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Max Term
-    //                   </td>
-    //                   <td>
-    //                     <input type="text" name="maxTerm"/>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Default Term
-    //                   </td>
-    //                   <td>
-    //                       <input type="text" name="defaultTerm"/>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Amortization Term
-    //                   </td>
-    //                   <td>
-    //                     <input type="text" name="amortizationTerm"/>
-    //                   </td>
-    //                 </tr>
-    //               </table>
-    //             </form>
-    //           </li>
-    //
-    //           <li>
-    //             <form id="interestForm">
-    //               <h4>Interest</h4>
-    //                 <table>
-    //                   <tr>
-    //                     <td>
-    //                       Interest Type
-    //                     </td>
-    //                     <td>
-    //                       <select>
-    //                         <option value="volvo">Volvo</option>
-    //                         <option value="saab">Saab</option>
-    //                         <option value="mercedes">Mercedes</option>
-    //                         <option value="audi">Audi</option>
-    //                       </select>
-    //                     </td>
-    //                   </tr>
-    //                   <tr>
-    //                     <td>
-    //                       Min Interest Rate
-    //                     </td>
-    //                     <td>
-    //                       <input type="text" name="minInterestRate"/>
-    //                     </td>
-    //                   </tr>
-    //                   <tr>
-    //                     <td>
-    //                       Max Interest Rate
-    //                     </td>
-    //                     <td>
-    //                       <input type="text" name="maxInterestRate"/>
-    //                     </td>
-    //                   </tr>
-    //                   <tr>
-    //                     <td>
-    //                       Default Interest Rate
-    //                     </td>
-    //                     <td>
-    //                       <input type="text" name="defaultInterestRate"/>
-    //                     </td>
-    //                   </tr>
-    //                 </table>
-    //             </form>
-    //           </li>
-    //
-    //           <li>
-    //             <form id="protectForm">
-    //               <h4>Protect</h4>
-    //               Protect Enabled <input type="radio" />
-    //             </form>
-    //           </li>
-    //
-    //           <li>
-    //             <form id="fundingForm">
-    //               <h4>Funding</h4>
-    //               <table>
-    //                 <tr>
-    //                   <td>
-    //                     Funding in Tranches
-    //                   </td>
-    //                   <td>
-    //                     <input type="radio" />
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Min Financed Amount
-    //                   </td>
-    //                   <td>
-    //                     <input type="text" name="minFinancedAmount"/>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Max Financed Amount
-    //                   </td>
-    //                   <td>
-    //                     <input type="text" name="maxFinancedAmount"/>
-    //                   </td>
-    //                 </tr>
-    //               </table>
-    //             </form>
-    //           </li>
-    //
-    //           <li>
-    //             <form id="tolerenceForm">
-    //               <h4>Tolerence</h4>
-    //               <table>
-    //                 <tr>
-    //                   <td>
-    //                     Late Charge Grace Days
-    //                   </td>
-    //                   <td>
-    //                     <input type="text" name="lateChargeGraceDays"/>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Delinquency Grace Days
-    //                   </td>
-    //                   <td>
-    //                     <input type="text" name="delinquencyGraceDays"/>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Write off Tolerance Amount
-    //                   </td>
-    //                   <td>
-    //                     <input type="text" name="writeOffToleranceAmount"/>
-    //                   </td>
-    //                 </tr>
-    //               </table>
-    //             </form>
-    //           </li>
-    //
-    //           <li>
-    //             <form id="accountingForm">
-    //               <h4>Accounting</h4>
-    //               <table>
-    //                 <tr>
-    //                   <td>
-    //                     Product Asset Account
-    //                   </td>
-    //                   <td>
-    //                   <select>
-    //                     <option value="volvo">Volvo</option>
-    //                     <option value="saab">Saab</option>
-    //                     <option value="mercedes">Mercedes</option>
-    //                     <option value="audi">Audi</option>
-    //                   </select>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Product Loan Control Account
-    //                   </td>
-    //                   <td>
-    //                   <select>
-    //                     <option value="volvo">Volvo</option>
-    //                     <option value="saab">Saab</option>
-    //                     <option value="mercedes">Mercedes</option>
-    //                     <option value="audi">Audi</option>
-    //                   </select>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Product Interest Income Account
-    //                   </td>
-    //                   <td>
-    //                   <select>
-    //                     <option value="volvo">Volvo</option>
-    //                     <option value="saab">Saab</option>
-    //                     <option value="mercedes">Mercedes</option>
-    //                     <option value="audi">Audi</option>
-    //                   </select>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Product Interest Receivable Account
-    //                   </td>
-    //                   <td>
-    //                     <select>
-    //                       <option value="volvo">Volvo</option>
-    //                       <option value="saab">Saab</option>
-    //                       <option value="mercedes">Mercedes</option>
-    //                       <option value="audi">Audi</option>
-    //                     </select>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Product Loan Loss Provision Account
-    //                   </td>
-    //                   <td>
-    //                   <select>
-    //                     <option value="volvo">Volvo</option>
-    //                     <option value="saab">Saab</option>
-    //                     <option value="mercedes">Mercedes</option>
-    //                     <option value="audi">Audi</option>
-    //                   </select>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Product Loan Loss Reserve Account
-    //                   </td>
-    //                   <td>
-    //                   <select>
-    //                     <option value="volvo">Volvo</option>
-    //                     <option value="saab">Saab</option>
-    //                     <option value="mercedes">Mercedes</option>
-    //                     <option value="audi">Audi</option>
-    //                   </select>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Product Loan Purchase Payable Account
-    //                   </td>
-    //                   <td>
-    //                   <select>
-    //                     <option value="volvo">Volvo</option>
-    //                     <option value="saab">Saab</option>
-    //                     <option value="mercedes">Mercedes</option>
-    //                     <option value="audi">Audi</option>
-    //                   </select>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Product Loan Purchase Receivable Account
-    //                   </td>
-    //                   <td>
-    //                   <select>
-    //                     <option value="volvo">Volvo</option>
-    //                     <option value="saab">Saab</option>
-    //                     <option value="mercedes">Mercedes</option>
-    //                     <option value="audi">Audi</option>
-    //                   </select>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Product Service Fee Income Account
-    //                   </td>
-    //                   <td>
-    //                     <select>
-    //                       <option value="volvo">Volvo</option>
-    //                       <option value="saab">Saab</option>
-    //                       <option value="mercedes">Mercedes</option>
-    //                       <option value="audi">Audi</option>
-    //                     </select>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Product Excess Account
-    //                   </td>
-    //                   <td>
-    //                   <select>
-    //                     <option value="volvo">Volvo</option>
-    //                     <option value="saab">Saab</option>
-    //                     <option value="mercedes">Mercedes</option>
-    //                     <option value="audi">Audi</option>
-    //                   </select>
-    //                   </td>
-    //                 </tr>
-    //                 <tr>
-    //                   <td>
-    //                     Product Write-Off Recovery Account
-    //                   </td>
-    //                   <td>
-    //                   <select>
-    //                     <option value="volvo">Volvo</option>
-    //                     <option value="saab">Saab</option>
-    //                     <option value="mercedes">Mercedes</option>
-    //                     <option value="audi">Audi</option>
-    //                   </select>
-    //                   </td>
-    //                 </tr>
-    //               </table>
-    //             </form>
-    //           </li>
-    //
-    //         </ul>
-    //
-    //       </div>
-    //       <div id="RightDiv" className="floatLeft paddingZero marginZero width30 heightAuto">
-    //        Right
-    //       </div>
-    //     </div>
-    //   )
-    // }
-    // else {
-    //   console.log('existinglendingProducts.basicData EMPTY', existinglendingProducts.basicData);
-    //   return (
-    //     <div>
-    //       <p>LOADING! </p>
-    //     </div>
-    //   )
-    // }
-
-
     console.log('RENDERING!');
     // THIRD
     let self = this;
@@ -623,6 +188,9 @@ const lendingProduct = React.createClass({
         as you can see, certain calls 'undefiend' was specified in the place of data retrieved from SF
         the reason behind this is that those types doesn't have any data required from SF
       */
+
+      //get all the keys of Global JSON
+
 
       // retrieve ProfileElements Elements
       let profileElementsHtmlContent = this.getTemplateStructure('ProfileElements', this.state.basicData.basicsData, this);
@@ -650,10 +218,12 @@ const lendingProduct = React.createClass({
 
       let wholeDatsOfAccountingElements = this.state.accountingData.accountingData;
       let finalAccountingElementsOptionsList = "";
-      wholeDatsOfAccountingElements.map(function(eachVal) {
-        let individualOption = "<option value='" + eachVal.Id + "'>" + eachVal.Name + "</option>";
-        finalAccountingElementsOptionsList += individualOption;
-      });
+      if(wholeDatsOfAccountingElements) {
+        wholeDatsOfAccountingElements.map(function(eachVal) {
+          let individualOption = "<option value='" + eachVal.Id + "'>" + eachVal.Name + "</option>";
+          finalAccountingElementsOptionsList += individualOption;
+        });
+      }
 
       let accountingElementsHtmlContent = this.getTemplateStructure('AccountingElements', finalAccountingElementsOptionsList, this);
 
@@ -663,47 +233,47 @@ const lendingProduct = React.createClass({
       */
 
       return (
-        <div id="LendingProductCmpMainDiv" className="paddingZero marginZero width100 height100">
-          <div id="leftDiv" className="floatLeft paddingZero marginZero width70 heightAuto displayTrue">
-            <div id="leftDiv_TOP" className="paddingZero marginZero width100 heightAuto">
-              <h4  className="paddingZero marginZero">Select Lending Product Type</h4>
-
-              <button id="nextBtn" onClick={this.existingLendingProductSelected}>Next</button>
-              <label id="errorMessage" className="displayFalse"></label>
+        <div id="LendingProductCmpMainDiv" className="">
+        <div className="width70 floatLeft ">
+          <div id="leftDiv" className="maxWidth60rem">
+            <div id="leftDiv_TOP" className="slds-modal__header">
+              <p className="slds-text-heading--medium slds-truncate" title="Exisiting Lending Product">Creating a new Lending Product</p>
             </div>
+            <div id="leftDiv_BOTTOM" className="">
 
-            <div id="leftDiv_BOTTOM" className="paddingZero marginZero width100 heightAuto">
-              <h4 className="paddingZero marginZero">Existing Lending Products</h4>
+              <div id="creatingNewLendingProduct" className="">
+                <div id='ProfileElements_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: profileElementsHtmlContent}}>
+                </div>
+                <div id='FeesElements_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: feesElementsHtmlContent}}>
+                </div>
+                <div id='TermElements_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone"  dangerouslySetInnerHTML={{__html: termElementsHtmlContent}}>
+                </div>
+                <div id='InterestElements_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: interestElementsHtmlContent}}>
+                </div>
+                <div  id='ProtectElements_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: protectElementsHtmlContent}}>
+                </div>
+                <div id='FundingElements_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone"  dangerouslySetInnerHTML={{__html: fundingElementsHtmlContent}}>
+                </div>
+                <div id='TolerenceElements_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: tolerenceElementsHtmlContent}}>
+                </div>
+                <div id='AccountingElements_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: accountingElementsHtmlContent}}>
+                </div>
+              </div>
             </div>
-
           </div>
-          <div id="creatingNewLendingProduct" className="floatLeft paddingZero marginZero width70 heightAuto displayFalse">
-            <h4 className="paddingZero marginZero"> creatingNewLendingProduct </h4>
-            <ul className="ulNoBulletPoint paddingZero">
-              <li dangerouslySetInnerHTML={{__html: profileElementsHtmlContent}}>
-              </li>
-              <li dangerouslySetInnerHTML={{__html: feesElementsHtmlContent}}>
-              </li>
-              <li dangerouslySetInnerHTML={{__html: termElementsHtmlContent}}>
-              </li>
-              <li dangerouslySetInnerHTML={{__html: interestElementsHtmlContent}}>
-              </li>
-              <li dangerouslySetInnerHTML={{__html: protectElementsHtmlContent}}>
-              </li>
-              <li dangerouslySetInnerHTML={{__html: fundingElementsHtmlContent}}>
-              </li>
-              <li dangerouslySetInnerHTML={{__html: tolerenceElementsHtmlContent}}>
-              </li>
-              <li dangerouslySetInnerHTML={{__html: accountingElementsHtmlContent}}>
-              </li>
-            </ul>
+          <div className="slds-form--horizontal maxWidth60rem marginTop2Percent">
+            <button id="navigationNextBtn" className="slds-button slds-button--neutral slds-not-selected" onClick={e => this.navigateBetweenPages(e, this)}>Next</button>
+            <button id="saveLendingProductBtn" className="slds-button slds-button--neutral slds-not-selected" onClick={e => this.submitForm(e)}>Save</button>
+          </div>
+          </div>
+          <div id="rightDiv" className="slds-modal--form maxWidth40rem floatRight width25">
+            <div id="rightDiv_TOP" className="slds-modal__header">
+              <p className="slds-text-heading--medium slds-truncate" title="Exisiting Lending Product">Help Text</p>
+            </div>
             <div>
-              <button id="saveLendingProductBtn" onClick={e => this.submitForm(e)}>Save</button>
+              <p id="HelpTextValue" ></p>
             </div>
-          </div>
-          <div id="RightDiv" className="floatLeft paddingZero marginZero width30 heightAuto">
-             Right
-          </div>
+        </div>
         </div>
       )
     }
@@ -717,29 +287,224 @@ const lendingProduct = React.createClass({
     }
   },
 
+  // onChange event
   onChangeForAllElements(e) {
+    // have to check whether the concerned page's isRequired values are filled or not.
     // store each and every element's value in a json obj and set state
-    // console.log(e.target.id);
-    // console.log(e.target.value);
+
+    // todo: validation on elements
+
+    //create json
+
+    console.log('##########',e.target.name);
     let jsonVal = this.state.allEnterData;
-    if(!jsonVal.hasOwnProperty(e.target.id)) {
-      jsonVal[e.target.id] = e.target.value;
-      //set state
-        // console.log('INTEREST DATA FROM CMP PROPS', data);
-      this.setState({
-        basicData : this.state.basicData,
-        interestData : this.state.interestData,
-        accountingData : this.state.accountingData,
-        allEnterData : jsonVal,
-        isLoading: false,
-        reRenderElements: false
-      })
+    if(!jsonVal.allData.hasOwnProperty(e.target.id)) {
+      // !arr[i].trim()
+      if(e.target.value.trim()) {
+        jsonVal.allData[e.target.id] = e.target.value;
+        //set state
+          // console.log('INTEREST DATA FROM CMP PROPS', data);
+        this.setState({
+          basicData : this.state.basicData,
+          interestData : this.state.interestData,
+          accountingData : this.state.accountingData,
+          allEnterData : jsonVal,
+          isLoading: false,
+          reRenderElements: false,
+          currentPage: e.target.name
+        })
+      }
+      else {
+        console.log('ERROR Write something in it');
+      }
     }
     // console.log(this.state.allEnterData);
     },
 
 
-///a2Y61000000YgWCEA0
+    onClickForAllElements(e) {
+      console.log(this.state.basicData.basicsData);
+      console.log(e.target.parentNode.parentNode.childNodes[0].innerHTML);
+      console.log(e.target.name);
+
+      if(e.target.name == "ProfileElements") {
+        console.log('inside comparision');
+        let helpTextVal = this.state.basicData.basicsData.map(function(individualBasicData) {
+          if(individualBasicData.label === e.target.parentNode.parentNode.childNodes[0].innerHTML) {
+            console.log('returningVal', individualBasicData);
+            return individualBasicData.help_text;
+          }
+        });
+        if(helpTextVal) {
+          console.log('appending helptext', helpTextVal);
+          $('#HelpTextValue').text(helpTextVal);
+        }
+        else{
+          $('#HelpTextValue').text("Yet to upload");
+        }
+      }
+      // $('#HelpTextValue').val();
+    },
+
+    ///a2Y61000000YgWCEA0
+
+  /*
+    here I am checking whether all IsRequired values are fullfilled or not
+    and then move the execution to the next page
+  */
+
+  navigateBetweenPages(e, thisVal) {
+    e.preventDefault();
+    let checkWhetherAllIsRequiredAreAnswered = false;
+    let checkWhetherIsRequiredIsInvoked = false;
+    let arrayToCheckWhetherAreThereAnyisRequired = [];
+    console.log('#########', thisVal.state.currentPage);
+    for(let i=0; i < LPFields.default[thisVal.state.currentPage].length; i++) {
+      let individualElement = LPFields.default[thisVal.state.currentPage][i];
+      if(individualElement.isRequired) {
+        // arrayToCheckWhetherAreThereAnyisRequired.push(true);
+        if(thisVal.state.allEnterData.allData.hasOwnProperty(individualElement.id)) {
+          checkWhetherAllIsRequiredAreAnswered = true;
+          checkWhetherIsRequiredIsInvoked = true;
+        }
+        else {
+          checkWhetherAllIsRequiredAreAnswered = false;
+          arrayToCheckWhetherAreThereAnyisRequired = [];
+          break;
+        }
+      }
+      else {
+        //for elements which does not have isRequired at all
+        if(!checkWhetherIsRequiredIsInvoked) {
+          arrayToCheckWhetherAreThereAnyisRequired.push(false);
+        }
+      }
+    }
+
+    if((arrayToCheckWhetherAreThereAnyisRequired.length !== 0 && arrayToCheckWhetherAreThereAnyisRequired.indexOf(false) !== -1)|| checkWhetherAllIsRequiredAreAnswered) {
+      // set State those who does not have any isRequired at all
+      //move to next div
+      let currentPageIndex = LPFields.default.AllPages.indexOf(thisVal.state.currentPage);
+      $('#' + LPFields.default.AllPages[currentPageIndex + 1] + '_MainDiv').addClass('displayBlock').removeClass('displayNone');
+      $('#' + LPFields.default.AllPages[currentPageIndex] + '_MainDiv').addClass('displayNone').removeClass('displayBlock');
+
+      //Set State
+
+      //set state
+        // console.log('INTEREST DATA FROM CMP PROPS', data);
+        thisVal.setState({
+          basicData : this.state.basicData,
+          interestData : this.state.interestData,
+          accountingData : this.state.accountingData,
+          allEnterData : this.state.allEnterData,
+          isLoading: false,
+          reRenderElements: false,
+          currentPage: LPFields.default.AllPages[currentPageIndex + 1]
+        })
+      }
+      else {
+        console.log('ERROR ERROR');
+      }
+
+    // let moveTheDiv = true;
+    // // console.log(this.state.allEnterData.completed);
+    // // moveTheDiv = this.state.allEnterData.completed.map(function(individualData) {
+    // for(let i=0;i<this.state.allEnterData.completed.length;i++) {
+    //   let individualData = this.state.allEnterData.completed[i];
+    //   // console.log('individualData', individualData);
+    //   if(!individualData.value) {
+    //
+    //     // check if the elements with 'isRequired' under indi_Data are written are not
+    //     // console.log(LPFields.default[individualData.FieldName]);
+    //
+    //     let arrayOfTrueFalse = [];
+    //     let arrayOfIsRequiredFalse = [];
+    //
+    //     LPFields.default[individualData.FieldName].map(function(fieldOfIndividualObject) {
+    //       // console.log('fieldOfIndividualObject', fieldOfIndividualObject);
+    //       if(fieldOfIndividualObject.isRequired) {
+    //           if(thisVal.state.allEnterData.allData.hasOwnProperty(fieldOfIndividualObject.id)) {
+    //             // set state with 'indi_Data' = true
+    //             let jsonVal = thisVal.state.allEnterData;
+    //             // console.log(jsonVal.completed);
+    //
+    //               jsonVal.completed.map(function(indi_jsonVal) {
+    //                 if(indi_jsonVal.FieldName === individualData.FieldName) {
+    //                   indi_jsonVal.value = true;
+    //                   // return jsonVal;
+    //                 }
+    //               });
+    //
+    //               // console.log(jsonVal);
+    //
+    //               thisVal.setState({
+    //                 basicData : thisVal.state.basicData,
+    //                 interestData : thisVal.state.interestData,
+    //                 accountingData : thisVal.state.accountingData,
+    //                 allEnterData : jsonVal,
+    //                 isLoading: false,
+    //                 reRenderElements: false
+    //               })
+    //
+    //               // close the current div and open a new div
+    //               arrayOfTrueFalse.push(true);
+    //           }
+    //           else {
+    //             // Show error
+    //             // thisVal.state.allEnterData.completed[individualData] = false;
+    //             let jsonVal = thisVal.state.allEnterData;
+    //             jsonVal.completed.map(function(indi_jsonVal) {
+    //               if(indi_jsonVal.FieldName === individualData.FieldName) {
+    //                 indi_jsonVal.value = false;
+    //                 // return jsonVal;
+    //               }
+    //             });
+    //
+    //             // console.log(jsonVal);
+    //
+    //             thisVal.setState({
+    //               basicData : thisVal.state.basicData,
+    //               interestData : thisVal.state.interestData,
+    //               accountingData : thisVal.state.accountingData,
+    //               allEnterData : jsonVal,
+    //               isLoading: false,
+    //               reRenderElements: false
+    //             })
+    //             console.log('RIGHT RIGHT RIGHT RIGHT');
+    //             arrayOfTrueFalse.push(false);
+    //           }
+    //         arrayOfIsRequiredFalse.push(false);
+    //       }
+    //       else {
+    //         arrayOfIsRequiredFalse.push(true);
+    //       }
+    //     });
+    //     if(arrayOfIsRequiredFalse.length !== 0 && arrayOfIsRequiredFalse.indexOf(false)) {
+    //
+    //     }
+    //     if(arrayOfTrueFalse.length !== 0 && arrayOfTrueFalse.indexOf(false) === -1) {
+    //       console.log('WHAT THE FUCK FUCK FUCK FUCK');
+    //       // return true;
+    //       break;
+    //     }
+    //     else {
+    //       // return false;
+    //       break;
+    //     }
+    //   }
+    // // });
+    // }
+    //
+    // if(moveTheDiv) {
+    //     //move div
+    //     console.log('MOVE MOVE MOVE');
+    // }
+    // else {
+    //   //show error on
+    //   console.log('SHOW ERROR ERROR ERROR');
+    // }
+    // console.log('thisVal.state.allEnterData.completed', thisVal.state.allEnterData.completed);
+  },
 
   submitForm(e) {
     e.preventDefault();
@@ -751,11 +516,13 @@ const lendingProduct = React.createClass({
 
     // this.state.allEnterData['sobjectType'] = 'loan__Loan_Product__c';
 
-    console.log('######');
-    console.log(this.state.allEnterData);
-    console.log('######');
-
-    this.props.submitForm(this.state.allEnterData);
+    if(JSON.stringify(this.state.allEnterData.completed).indexOf('false') !== -1) {
+      console.log('False is Present');
+    }
+    else {
+      console.log('False is Not Present');
+      this.props.submitForm(this.state.allEnterData);
+    }
     //call the required action
 
 
@@ -801,25 +568,25 @@ const lendingProduct = React.createClass({
 
   },
 
-  processPickListValues(individualPageData, htmlElement, dataLabelName, selfVal) {
-    //Billing Method
-    let optionsForThisSelect = {};
-    individualPageData.basicsData.map(function(singleTabData) {
-    if(singleTabData.label === dataLabelName) {
-        optionsForThisSelect = selfVal.creatOptions(singleTabData.picklist, selfVal);
-      }
-    });
-
-    //creating good options
-
-    return (
-      <Select
-        name="form-field-name"
-        value="one"
-        options={optionsForThisSelect}
-      />
-    )
-  },
+  // processPickListValues(individualPageData, htmlElement, dataLabelName, selfVal) {
+  //   //Billing Method
+  //   let optionsForThisSelect = {};
+  //   individualPageData.basicsData.map(function(singleTabData) {
+  //   if(singleTabData.label === dataLabelName) {
+  //       optionsForThisSelect = selfVal.creatOptions(singleTabData.picklist, selfVal);
+  //     }
+  //   });
+  //
+  //   //creating good options
+  //
+  //   return (
+  //     <Select
+  //       name="form-field-name"
+  //       value="one"
+  //       options={optionsForThisSelect}
+  //     />
+  //   )
+  // },
 
   creatOptions(formatTheseOptions, selfVal) {
     var returnOptionsObj = [];
@@ -856,7 +623,9 @@ const lendingProduct = React.createClass({
     //read Inner HTML Array
     // this.readJson(template.default.Elements, this);
 
-    let finalHtmlViewWithFields = "<div style='display: table'>";
+    // let finalHtmlViewWithFields = "<div>";
+
+    let finalHtmlViewWithFields = "";
 
     // console.log('LPFields', LPFields.default[type]);
 
@@ -864,15 +633,14 @@ const lendingProduct = React.createClass({
     let pickListValues;
 
     if(LPFields.default[type].length > 0) {
+
       LPFields.default[type].map(function(eachField) {
         let eachElementHtmlContent = thisVal.createTheElement(type, eachField, wholeDatsOfThisType, thisVal);
         // console.log('eachElementHtmlContent', eachElementHtmlContent);
-        finalHtmlViewWithFields += "<div style='display: table-row'>";
         finalHtmlViewWithFields += eachElementHtmlContent;
-        finalHtmlViewWithFields += "</div>";
       });
     }
-    finalHtmlViewWithFields += "</div>";
+    // finalHtmlViewWithFields += "</div>";
     // console.log('finalHtmlViewWithFields',finalHtmlViewWithFields);
 
     return ( finalHtmlViewWithFields );
@@ -895,39 +663,59 @@ const lendingProduct = React.createClass({
 
   createTheElement(type, objectData, wholeDatsOfThisType, thisVal) {
     // console.log('objectData', objectData);
-    let finalElement = "<div style='display: table-cell'>";
-    let htmlStartElement = thisVal.createStartingElement(objectData, thisVal);
+    let htmlStartElement = thisVal.createStartingElement(objectData, thisVal, type);
     let htmlEndElement = "";
     if(objectData.type === "checkbox" || objectData.type === "radio") {
     }
     else {
       htmlEndElement = thisVal.createEndingElement(objectData.element);
+
+      // let finalEndingElementStructure;
+      // htmlEndElement = '</' + type + '>';
+      // return finalEndingElementStructure;
+
     }
 
-    let labelForElement = thisVal.createLabelForConcernedElement(objectData.label, objectData.id);
-    finalElement += labelForElement;
-    finalElement += "</div>";
-    finalElement += "<div>";
-    finalElement += htmlStartElement;
-    if(objectData.element === "select" && wholeDatsOfThisType != undefined && type != "AccountingElements") {
-      let resultVal = thisVal.searchArray(wholeDatsOfThisType, objectData.label, 'label');
-      // pickListValues = resultVal.picklist;
-      let optionsForPickList;
-      if(resultVal) {
-        optionsForPickList = thisVal.createOptionsForPickList(resultVal.picklist);
+    let labelForElement = thisVal.createLabelForConcernedElement(objectData.label, objectData.id, objectData.labelClassName, thisVal);
+
+    // finalElement += "</div>";
+    let finalElement = "<div class='slds-form-element'>";
+
+    if(objectData.type === "checkbox" || objectData.type === "radio") {
+      // console.log(objectData.type);
+      finalElement += "<div class='slds-form-element__control'>";
+      finalElement += htmlStartElement;
+      finalElement += htmlEndElement;
+      finalElement += "</div>";
+      finalElement += labelForElement;
+      finalElement += "</div>";
+    }
+    else {
+      finalElement += labelForElement;
+      finalElement += "<div class='slds-form-element__control'>";
+      finalElement += htmlStartElement;
+      if(objectData.element === "select" && wholeDatsOfThisType != undefined && type != "AccountingElements") {
+        let resultVal = thisVal.searchArray(wholeDatsOfThisType, objectData.label, 'label');
+        // pickListValues = resultVal.picklist;
+        let optionsForPickList;
+        if(resultVal) {
+          optionsForPickList = thisVal.createOptionsForPickList(resultVal.picklist);
+        }
+        finalElement += optionsForPickList;
       }
-      finalElement += optionsForPickList;
+      else if(objectData.element === "select" && wholeDatsOfThisType != undefined && type === "AccountingElements") {
+        finalElement += wholeDatsOfThisType;
+      }
+      finalElement += htmlEndElement;
+      finalElement += "</div>";
+      finalElement += "</div>";
     }
-    else if(objectData.element === "select" && wholeDatsOfThisType != undefined && type === "AccountingElements"){
-      finalElement += wholeDatsOfThisType;
-    }
-    finalElement += htmlEndElement;
-    finalElement += "</div>";
     // return (labelForElement + htmlStartElement + htmlEndElement);
+    // console.log(finalElement);
     return finalElement;
   },
 
-  createStartingElement(objectData, thisVal) {
+  createStartingElement(objectData, thisVal, pageType) {
     const spaceVariable = ' ';
     const quotesVariable = '"';
     let finalStartingElementStructure;
@@ -936,17 +724,25 @@ const lendingProduct = React.createClass({
       finalStartingElementStructure += 'type=' + quotesVariable + objectData.type + quotesVariable + spaceVariable;
     }
     finalStartingElementStructure += 'ref=' + quotesVariable + objectData.id + quotesVariable + spaceVariable;
+    finalStartingElementStructure += 'name=' + quotesVariable + pageType + quotesVariable + spaceVariable;
     finalStartingElementStructure += 'id=' + quotesVariable + objectData.id + quotesVariable + spaceVariable;
 
-    //onChange={this.handleChange.bind(this, 'input1')}
-    // finalStartingElementStructure += 'onChange=' + quotesVariable  + onChangeForAllElements +  quotesVariable + spaceVariable;
+    // onChange={this.handleChange.bind(this, 'input1')}
+
+    // finalStartingElementStructure += 'onChange=' + quotesVariable  + this.onChangeForAllElements +  quotesVariable + spaceVariable;
 
     // finalStartingElementStructure += 'onChange=' + quotesVariable  + this.props.testActiontoTestRetrievingDataFromSalesForce() +  quotesVariable + spaceVariable;
 
     //using JQuery for on Change event
     $(document).on('change', '#'+objectData.id, this.onChangeForAllElements);
+    $(document).on('click', '#'+objectData.id, this.onClickForAllElements);
 
     // onChangeForAllElements
+
+    //adding classNames
+    if(objectData.elementClassName) {
+      finalStartingElementStructure += thisVal.loopThroughClassNamesAndAddtoString(objectData.elementClassName);
+    }
 
     if(objectData.type === "checkbox" || objectData.type === "radio") {
       finalStartingElementStructure += '/>';
@@ -965,11 +761,27 @@ const lendingProduct = React.createClass({
     return finalEndingElementStructure;
   },
 
-  createLabelForConcernedElement(labelValue, labelForId) {
+  createLabelForConcernedElement(labelValue, labelForId, listOfClasses, thisVal) {
     let labelElement;
     //<label for="female">Female</label>
-    labelElement = '<label for="' + labelForId + '"> ' + labelValue + '</label>';
+    labelElement = '<label for="' + labelForId + '"';
+    if(listOfClasses) {
+      labelElement += thisVal.loopThroughClassNamesAndAddtoString(listOfClasses);
+    }
+    labelElement += '>';
+    //listOfClasses
+    labelElement += labelValue;
+    labelElement += '</label>';
     return labelElement;
+  },
+
+  loopThroughClassNamesAndAddtoString(listOfClassNames) {
+    let finalValueToReturn = 'class="';
+    listOfClassNames.map(function(individualClassName) {
+      finalValueToReturn +=individualClassName + ' ';
+    });
+    finalValueToReturn += '"';
+    return finalValueToReturn;
   },
 
   searchArray(array, key, prop) {
@@ -985,73 +797,6 @@ const lendingProduct = React.createClass({
       }
     }
   }
-
-
-  // readJson(jsonObj, thisVal) {
-  //   console.log('jsonObj', jsonObj);
-  //   jsonObj.map(function(innerJson) {
-  //     // create HTML content by reading JSON
-  //     let finalElement;
-  //     let htmlStartElement = thisVal.createStartingElement(innerJson);
-  //     if(innerJson.innerElements.length > 0) {
-  //       console.log('INNER ELEMENTS TRUE');
-  //
-  //       //loop thru inner Elements
-  //       // thisVal.readInnerElements(innerJson.innerElements);
-  //     }
-  //     // else {
-  //     //   console.log('INNER ELEMENTS FALSE');
-  //     //   // thisVal.createTheElement(innerJson, thisVal);
-  //     //   let finalElement;
-  //     //   let htmlStartElement = thisVal.createStartingElement(innerJson);
-  //     //   let htmlEndElement = thisVal.createEndingElement(innerJson.type);
-  //     //   console.log('htmlEndElement', htmlEndElement);
-  //     //   finalElement = htmlStartElement + htmlEndElement;
-  //     //   console.log('FINALELEMENT', finalElement);
-  //     // }
-  //     let htmlEndElement = thisVal.createEndingElement(innerJson.type);
-  //     finalElement = htmlStartElement + htmlEndElement;
-  //     retur finalElement;
-  //   });
-  // },
-  //
-  // // LPFields
-  //
-  // readInnerElements(jsonToGetInnerELEMENTS) {
-  //   console.log('jsonToGetInnerELEMENTS', jsonToGetInnerELEMENTS);
-  // },
-  //
-  // // Fxn call for creating Element
-  // createTheElement(objectData, thisVal) {
-  //   console.log('objectData', objectData);
-  //   let finalElement;
-  //   let htmlStartElement = thisVal.createStartingElement(objectData);
-  //   let htmlEndElement = thisVal.createEndingElement(objectData.type);
-  // },
-  //
-  // createStartingElement(objectData) {
-  //   const spaceVariable = ' ';
-  //   const quotesVariable = '"';
-  //   let finalStartingElementStructure;
-  //   finalStartingElementStructure = '<' + objectData.type + spaceVariable;
-  //   finalStartingElementStructure += 'id:' + quotesVariable + objectData.id + quotesVariable + spaceVariable;
-  //   finalStartingElementStructure += 'className:' + quotesVariable + objectData.className + quotesVariable + spaceVariable;
-  //
-  //   if(objectData.value.length > 0) {
-  //     finalStartingElementStructure = 'value:' + quotesVariable + objectData.value + quotesVariable + spaceVariable;
-  //   }
-  //
-  //   finalStartingElementStructure += '>';
-  //
-  //   return finalStartingElementStructure;
-  // },
-  //
-  // createEndingElement(type) {
-  //
-  //   let finalEndingElementStructure;
-  //   finalEndingElementStructure = '</' + type + '>';
-  //   return finalEndingElementStructure;
-  // }
 
 });
 
