@@ -1,6 +1,6 @@
   // Action Creators
 
-import {getData, getBasicsData, getInterestData, getAccountingData, submitLoanData} from '../api/serverCalls';
+import {getData, getBasicsData, getInterestData, getAccountingData, submitLoanData, getFeeSetUrl, getExisitingFeeSets} from '../api/serverCalls';
 
 export function openExistingLendingProduct(LendingProductName, LendingProductId) {
   return {
@@ -57,12 +57,28 @@ export function getAccountingDataFromDB() {
   }
 }
 
+export function getFeeSetUrlFromDB() {
+  return {
+    type: 'RETRIEVE_FEESET_URL',
+    feeSetUrl: getFeeSetUrl()
+  }
+}
+
+export function getExisitingFeeSetsFromDB() {
+  return {
+    type: 'EXISITING_FEESET_DATA',
+    exisitingFeeSetData: getExisitingFeeSets()
+  }
+}
+
 export function submitForm(loanData) {
   return {
     type: 'SUBMIT_FORM',
     allDataInsertedConfirmation: submitLoanData(loanData)
   }
 }
+
+
 
 // export function getDataFromDB() {
 //   return {

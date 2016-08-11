@@ -124,6 +124,40 @@ export function submitLoanData(loanData) {
   });
 }
 
+export function getFeeSetUrl() {
+  console.log('getFeeSetUrl from Server Call');
+  return new Promise((resolve, reject) => {
+    try {
+      CL_SimpleLoanProduct_Controller.getFeeURLForUser(function(Result, event) {
+        if(event.status) {
+          console.log('Result=', Result);
+        }
+        return resolve({feeSetUrl: Result});
+      }, {escape:true});
+    }
+    catch(ex) {
+      console.log('Exception', ex);
+    }
+  });
+}
+
+export function getExisitingFeeSets() {
+  console.log('getExisitingFeeSets from Server Call');
+  return new Promise((resolve, reject) => {
+    try {
+      CL_SimpleLoanProduct_Controller.getValidFeeSets(function(Result, event) {
+        if(event.status) {
+          console.log('Result=', Result);
+        }
+        return resolve({existingFeeSets: Result});
+      }, {escape:true});
+    }
+    catch(ex) {
+      console.log('Exception', ex);
+    }
+  });
+}
+
 
 // export function getData() {
 //   return new Promise((resolve, reject) => {

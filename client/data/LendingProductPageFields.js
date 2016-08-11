@@ -35,7 +35,7 @@ const LendingProductFields = {
     "label": "Billing Method",
     "labelClassName" : [
       "slds-form-element__label",
-      "clearBoth",
+      "clearBoth"
 
     ],
     "isRequired" : false
@@ -63,7 +63,7 @@ const LendingProductFields = {
     "label": "Time Counting Method",
     "labelClassName" : [
       "slds-form-element__label",
-      "clearBoth",
+      "clearBoth"
     ],
     "isRequired" : false
   },
@@ -148,13 +148,14 @@ const LendingProductFields = {
       "marginTop05"
     ],
     "id": "existingFeeSetRdbtn",
-    "name": "Fees",
+    "name": "loan__Fee_Set__c",
     "label": "Choose Existing Fee Set",
     "labelClassName" : [
       "slds-form-element__label",
       "clearBoth"
     ],
-    "isRequired" : false
+    "isRequired" : false,
+    "selected" : false
   },
   {
     "element": "input",
@@ -164,13 +165,30 @@ const LendingProductFields = {
       "marginTop05"
     ],
     "id": "loan__Fee_Set__c",
-    "name": "Fees",
+    "name": "loan__Fee_Set__c",
     "label": "Create New Fee Set",
     "labelClassName" : [
       "slds-form-element__label",
       "clearBoth"
     ],
-    "isRequired" : false
+    "isRequired" : false,
+    "selected" : true,
+    "dependentElements" : [
+      {
+        "element": "button",
+        "type": "button",
+        "elementClassName": [
+
+        ],
+        "id": "createNewFeeSetBtn",
+        "name": "feeSetUrl",
+        "label": "Click to Create new Fee Set",
+        "labelClassName" : [
+          "slds-form-element__label",
+          "clearBoth"
+        ]
+      }
+    ]
   }
 ],
 
@@ -187,7 +205,19 @@ const LendingProductFields = {
       "slds-form-element__label",
       "clearBoth"
     ],
-    "isRequired" : true
+    "isRequired" : true,
+    "validations" : [
+      {
+        "symbol" : "<",
+        "comparisionVal": "loan__Max_Number_of_Installments__c",
+        "message" : "Min Term Must be Less than Max Term"
+      },
+      {
+        "symbol" : "<",
+        "comparisionVal": "loan__Default_Number_of_Installments__c",
+        "message" : "Min Term Must be Less than Default Term"
+      }
+    ]
   },
   {
     "element": "input",
@@ -201,7 +231,19 @@ const LendingProductFields = {
       "slds-form-element__label",
       "clearBoth"
     ],
-    "isRequired" : true
+    "isRequired" : true,
+    "validations" : [
+      {
+        "symbol" : ">",
+        "comparisionVal": "loan__Min_Number_of_Installments__c",
+        "message" : "Max Term Must be More than Min Term"
+      },
+      {
+        "symbol" : ">",
+        "comparisionVal": "loan__Default_Number_of_Installments__c",
+        "message" : "Max Term Must be More than Default Term"
+      }
+    ]
   },
   {
     "element": "input",
@@ -215,7 +257,19 @@ const LendingProductFields = {
       "slds-form-element__label",
       "clearBoth"
     ],
-    "isRequired" : true
+    "isRequired" : true,
+    "validations" : [
+      {
+        "symbol" : "<",
+        "comparisionVal": "loan__Max_Number_of_Installments__c",
+        "message" : "Default Term Must be Less than Max Term"
+      },
+      {
+        "symbol" : ">",
+        "comparisionVal": "loan__Min_Number_of_Installments__c",
+        "message" : "Default Term Must be More than Min Term"
+      }
+    ]
   },
   {
     "element": "input",
@@ -259,7 +313,19 @@ const LendingProductFields = {
       "slds-form-element__label",
       "clearBoth"
     ],
-    "isRequired" : true
+    "isRequired" : true,
+    "validations" : [
+      {
+        "symbol" : "<",
+        "comparisionVal": "loan__Max_Interest_Rate__c",
+        "message" : "Min Interest Rate Must be Less than Max Interest Rate"
+      },
+      {
+        "symbol" : "<",
+        "comparisionVal": "loan__Default_Interest_Rate__c",
+        "message" : "Min Interest Rate Must be Less than Default Interest Rate"
+      }
+    ]
   },
   {
     "element": "input",
@@ -273,7 +339,19 @@ const LendingProductFields = {
       "slds-form-element__label",
       "clearBoth"
     ],
-    "isRequired" : true
+    "isRequired" : true,
+    "validations" : [
+      {
+        "symbol" : ">",
+        "comparisionVal": "loan__Min_Interest_Rate__c",
+        "message" : "Max Interest Rate Must be More than Min Interest Rate"
+      },
+      {
+        "symbol" : ">",
+        "comparisionVal": "loan__Default_Interest_Rate__c",
+        "message" : "Max Interest Rate Must be More than Default Interest Rate"
+      }
+    ]
   },
   {
     "element": "input",
@@ -287,7 +365,19 @@ const LendingProductFields = {
       "slds-form-element__label",
       "clearBoth"
     ],
-    "isRequired" : true
+    "isRequired" : true,
+    "validations" : [
+      {
+        "symbol" : ">",
+        "comparisionVal": "loan__Min_Interest_Rate__c",
+        "message" : "Default Interest Rate Must be More than Min Interest Rate"
+      },
+      {
+        "symbol" : "<",
+        "comparisionVal": "loan__Max_Interest_Rate__c",
+        "message" : "Default Interest Rate Must be Less than Max Interest Rate"
+      }
+    ]
   }
 ],
 "ProtectElements" : [
@@ -335,7 +425,14 @@ const LendingProductFields = {
       "slds-form-element__label",
       "clearBoth"
     ],
-    "isRequired" : true
+    "isRequired" : true,
+    "validations" : [
+      {
+        "symbol" : "<",
+        "comparisionVal": "loan__Max_Loan_Amount__c",
+        "message" : "Min Financed Amount Must be Less than Max Financed Amount"
+      }
+    ]
   },
   {
     "element": "input",
@@ -349,7 +446,14 @@ const LendingProductFields = {
       "slds-form-element__label",
       "clearBoth"
     ],
-    "isRequired" : true
+    "isRequired" : true,
+    "validations" : [
+      {
+        "symbol" : ">",
+        "comparisionVal": "loan__Min_Loan_Amount__c",
+        "message" : "Max Financed Amount Must be More than Min Financed Amount"
+      }
+    ]
   }
 ],
 "TolerenceElements" : [
