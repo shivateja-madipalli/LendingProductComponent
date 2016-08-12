@@ -1,9 +1,7 @@
 import React from 'react';
 let $ = require ('jquery');
-let Select = require('react-select');
 
-// let template = require('../data/TemplateStructure');
-
+// data for creating the component
 let LPFields = require('../data/LendingProductPageFields');
 
 //importing commonStyles
@@ -11,72 +9,70 @@ let LPFields = require('../data/LendingProductPageFields');
 
 const lendingProduct = React.createClass({
 
+  /* Comments Section
+    getInitialState: is used for creating an empty object for filling in the data in further functionality
 
-  /*
-  getInitialState: is used for creating an empty object for filling in the data in further functionality
+    componentDidMount: will called after render method and universally if some data is to be loaded prior to the
+    page load, many get the data in this life cycle event
 
-  componentDidMount: will called after render method and universally if some data is to be loaded prior to the
-  page load, many get the data in this life cycle event
+    In our code we are retrieving data from DB by calling
+    "getAllPickListData"
+    So that once we get the data out UI will be updated accordingly.
 
-  In our code we are retrieving data from DB by calling
-  "getAllPickListData"
-  So that once we get the data out UI will be updated accordingly.
+    once getAllPickListData is executed, an action will be called,
+    that action will call a ServerCall to get the data,
+    that particular Server Call will return a promise which will be again returned from reducer.
 
-  once getAllPickListData is executed, an action will be called,
-  that action will call a ServerCall to get the data,
-  that particular Server Call will return a promise which will be again returned from reducer.
+    The reducer returned promise will be handled by mapStateToProps in container
+    those values will be added to props and those props will be connected to the component
 
-  The reducer returned promise will be handled by mapStateToProps in container
-  those values will be added to props and those props will be connected to the component
+    with the component's props values we can access the actual value returned from the serverCall promise
 
-  with the component's props values we can access the actual value returned from the serverCall promise
+    After componentDidMount, as the component will Receive new Props now, "componentWillReceiveProps",
+    will be called thus here the values returned from reducer can be accessed and used.
 
-  After componentDidMount, as the component will Receive new Props now, "componentWillReceiveProps",
-  will be called thus here the values returned from reducer can be accessed and used.
+    setState() will make the component load again but to have a check for this there's another event
 
-  setState() will make the component load again but to have a check for this there's another event
+    "shouldComponentUpdate" where we can tell whether the component need to update or not
 
-  "shouldComponentUpdate" where we can tell whether the component need to update or not
-
-  as the component needs to update the vals can be accessed
-
+    as the component needs to update the vals can be accessed
   */
 
-
   getInitialState() {
-    console.log('getInitialState');
 
+    // console.log('getInitialState');
     // console.log('the Keys:', Object.keys(LPFields.default));
-    let LPFieldsArray = Object.keys(LPFields.default);
-    let completedData = {
-      completed: [],
-      allData: {
+    // let LPFieldsArray = Object.keys(LPFields.default);
+    // let completedData = {
+    //   completed: [],
+    //   allData: {}
+    // };
 
-      }
-    };
+    // LPFieldsArray.map(function(individualPage) {
+    //   completedData.completed.push (
+    //     {
+    //       'FieldName' : individualPage,
+    //       'value' : false
+    //     }
+    //   );
+    // });
 
+    // return {
+    //   basicData : {},
+    //   interestData : {},
+    //   accountingData : {},
+    //   allEnterData : completedData,
+    //   isLoading : true,
+    //   reRenderElements : false,
+    //   currentPage: "",
+    //   confirmationFromSFAfterInsertingLoan: {},
+    //   feeSetUrl: "",
+    //   exisitingfeeSets : {},
+    //   HelpTextData: {}
+    // }
 
-    LPFieldsArray.map(function(individualPage) {
-      completedData.completed.push (
-        {
-          'FieldName' : individualPage,
-          'value' : false
-        }
-      );
-    });
-    return {
-      basicData : {},
-      interestData : {},
-      accountingData : {},
-      allEnterData : completedData,
-      isLoading : true,
-      reRenderElements : false,
-      currentPage: "",
-      confirmationFromSFAfterInsertingLoan: {},
-      feeSetUrl: "",
-      exisitingfeeSets : {},
-      HelpTextData: {}
-    }
+    console.log('getInitialState');
+    return LPFields.default.InitialState;
   },
 
   componentWillMount() {
@@ -86,8 +82,8 @@ const lendingProduct = React.createClass({
 
   componentDidMount() {
     // FOURTH
-    this.getAllPickListData();
     console.log('componentDidMount');
+    this.getAllPickListData();
   },
 
   componentWillReceiveProps(NextProps) {
@@ -191,6 +187,9 @@ const lendingProduct = React.createClass({
           exisitingfeeSets : this.state.exisitingfeeSets,
           HelpTextData: this.state.HelpTextData
         })
+        if(data.finalResponseAfterInsertion !== null) {
+          location.reload();
+        }
       }.bind(this));
     }
     //feeSetUrl
@@ -371,12 +370,16 @@ const lendingProduct = React.createClass({
         </div>
         </div>
         <div id="rightDiv" className="slds-modal--form maxWidth40rem floatRight width25">
-        <div id="rightDiv_TOP" className="slds-modal__header">
-        <p className="slds-text-heading--medium slds-truncate" title="Exisiting Lending Product">Help Text</p>
-        </div>
-        <div id="HelpTextValue">
-        </div>
-        </div>
+          <div id="rightDiv_TOP" className="slds-modal__header">
+          <p className="slds-text-heading--medium slds-truncate" title="Exisiting Lending Product">Help Text</p>
+          </div>
+          <div className="slds-card">
+              <div className="slds-card__body" id="simple_loan_product_help_content">
+                <div id="HelpTextValue">
+                </div>
+              </div>
+          </div>
+          </div>
         </div>
       )
     }
@@ -513,13 +516,11 @@ const lendingProduct = React.createClass({
   getElementHelpText(elementId, thisVal) {
     let data = thisVal.state.HelpTextData.helpTextWithElementId;
     return data.filter(
-        function(data){
-          return data.elementId === elementId;
-        }
+      function(data){
+        return data.elementId === elementId;
+      }
     );
   },
-
-  ///a2Y61000000YgWCEA0
 
   /*
   here I am checking whether all IsRequired values are fullfilled or not
@@ -696,104 +697,6 @@ const lendingProduct = React.createClass({
       $('#showErrorMessage').text('Enter Values');
     }
   },
-  // let moveTheDiv = true;
-  // // console.log(this.state.allEnterData.completed);
-  // // moveTheDiv = this.state.allEnterData.completed.map(function(individualData) {
-  // for(let i=0;i<this.state.allEnterData.completed.length;i++) {
-  //   let individualData = this.state.allEnterData.completed[i];
-  //   // console.log('individualData', individualData);
-  //   if(!individualData.value) {
-  //
-  //     // check if the elements with 'isRequired' under indi_Data are written are not
-  //     // console.log(LPFields.default[individualData.FieldName]);
-  //
-  //     let arrayOfTrueFalse = [];
-  //     let arrayOfIsRequiredFalse = [];
-  //
-  //     LPFields.default[individualData.FieldName].map(function(fieldOfIndividualObject) {
-  //       // console.log('fieldOfIndividualObject', fieldOfIndividualObject);
-  //       if(fieldOfIndividualObject.isRequired) {
-  //           if(thisVal.state.allEnterData.allData.hasOwnProperty(fieldOfIndividualObject.id)) {
-  //             // set state with 'indi_Data' = true
-  //             let jsonVal = thisVal.state.allEnterData;
-  //             // console.log(jsonVal.completed);
-  //
-  //               jsonVal.completed.map(function(indi_jsonVal) {
-  //                 if(indi_jsonVal.FieldName === individualData.FieldName) {
-  //                   indi_jsonVal.value = true;
-  //                   // return jsonVal;
-  //                 }
-  //               });
-  //
-  //               // console.log(jsonVal);
-  //
-  //               thisVal.setState({
-  //                 basicData : thisVal.state.basicData,
-  //                 interestData : thisVal.state.interestData,
-  //                 accountingData : thisVal.state.accountingData,
-  //                 allEnterData : jsonVal,
-  //                 isLoading: false,
-  //                 reRenderElements: false
-  //               })
-  //
-  //               // close the current div and open a new div
-  //               arrayOfTrueFalse.push(true);
-  //           }
-  //           else {
-  //             // Show error
-  //             // thisVal.state.allEnterData.completed[individualData] = false;
-  //             let jsonVal = thisVal.state.allEnterData;
-  //             jsonVal.completed.map(function(indi_jsonVal) {
-  //               if(indi_jsonVal.FieldName === individualData.FieldName) {
-  //                 indi_jsonVal.value = false;
-  //                 // return jsonVal;
-  //               }
-  //             });
-  //
-  //             // console.log(jsonVal);
-  //
-  //             thisVal.setState({
-  //               basicData : thisVal.state.basicData,
-  //               interestData : thisVal.state.interestData,
-  //               accountingData : thisVal.state.accountingData,
-  //               allEnterData : jsonVal,
-  //               isLoading: false,
-  //               reRenderElements: false
-  //             })
-  //             console.log('RIGHT RIGHT RIGHT RIGHT');
-  //             arrayOfTrueFalse.push(false);
-  //           }
-  //         arrayOfIsRequiredFalse.push(false);
-  //       }
-  //       else {
-  //         arrayOfIsRequiredFalse.push(true);
-  //       }
-  //     });
-  //     if(arrayOfIsRequiredFalse.length !== 0 && arrayOfIsRequiredFalse.indexOf(false)) {
-  //
-  //     }
-  //     if(arrayOfTrueFalse.length !== 0 && arrayOfTrueFalse.indexOf(false) === -1) {
-  //       console.log('WHAT THE FUCK FUCK FUCK FUCK');
-  //       // return true;
-  //       break;
-  //     }
-  //     else {
-  //       // return false;
-  //       break;
-  //     }
-  //   }
-  // // });
-  // }
-  //
-  // if(moveTheDiv) {
-  //     //move div
-  //     console.log('MOVE MOVE MOVE');
-  // }
-  // else {
-  //   //show error on
-  //   console.log('SHOW ERROR ERROR ERROR');
-  // }
-  // console.log('thisVal.state.allEnterData.completed', thisVal.state.allEnterData.completed);
 
   // Back Button
   navigateBetweenPagesGoBack(e, thisVal) {
@@ -892,8 +795,8 @@ const lendingProduct = React.createClass({
     let jsonWithAllElementIds = [];
 
     /*
-      "elementId" : "",
-      "HelpText" :
+    "elementId" : "",
+    "HelpText" :
     */
 
 
@@ -902,7 +805,6 @@ const lendingProduct = React.createClass({
 
     for(let i=1;i<LPFieldsArray.length;i++) {
       for(let j=0;j<LPFields.default[LPFieldsArray[i]].length;j++) {
-        // jsonWithAllElementIds[LPFields.default[LPFieldsArray[i]][j].id] = "";
         jsonWithAllElementIds.push({
           "elementId" : LPFields.default[LPFieldsArray[i]][j].id,
           "HelpText" : ""
@@ -929,26 +831,6 @@ const lendingProduct = React.createClass({
     this.props.getExisitingFeeSetsFromDB();
   },
 
-  // processPickListValues(individualPageData, htmlElement, dataLabelName, selfVal) {
-  //   //Billing Method
-  //   let optionsForThisSelect = {};
-  //   individualPageData.basicsData.map(function(singleTabData) {
-  //   if(singleTabData.label === dataLabelName) {
-  //       optionsForThisSelect = selfVal.creatOptions(singleTabData.picklist, selfVal);
-  //     }
-  //   });
-  //
-  //   //creating good options
-  //
-  //   return (
-  //     <Select
-  //       name="form-field-name"
-  //       value="one"
-  //       options={optionsForThisSelect}
-  //     />
-  //   )
-  // },
-
   creatOptions(formatTheseOptions, selfVal) {
     var returnOptionsObj = [];
     formatTheseOptions.map(function(singleVal){
@@ -967,7 +849,6 @@ const lendingProduct = React.createClass({
     stringVal = stringVal.split(' ').join('_');
     return stringVal;
   },
-
 
   createBreadCrumbElements(thisVal) {
     // let finalReturnValue = '<ol class="slds-list--horizontal">';
@@ -1026,7 +907,6 @@ const lendingProduct = React.createClass({
         finalHtmlViewWithFields += eachElementHtmlContent;
       });
     }
-    // finalHtmlViewWithFields += "</div>";
     // console.log('finalHtmlViewWithFields',finalHtmlViewWithFields);
 
     return ( finalHtmlViewWithFields );
@@ -1035,11 +915,7 @@ const lendingProduct = React.createClass({
   createOptionsForPickList(arrayOfOptions) {
     // pickListValues
     let finalOptionsList = "";
-    //<option value="volvo">Volvo</option>
-    // arrayOfOptions.map(function(eachVal) {
-    //
-    //
-    // });
+
     for(let i=0;i<arrayOfOptions.length;i++) {
       let idVal = i;
       let Value = arrayOfOptions[i];
@@ -1098,7 +974,6 @@ const lendingProduct = React.createClass({
       }
       else if(objectData.id == "existingFeeSetRdbtn") {
         //create drop down list with exisiting options
-        // let selectForExisitingFeeSetData = "<div>";
 
         selectForExisitingFeeSetData = '<select id="existingFeeSetSelect" name="loan__Fee_Set__c" class="clearBoth displayNone slds-select Width15">';
 
@@ -1199,6 +1074,7 @@ const lendingProduct = React.createClass({
     //using JQuery for on Change event
     $(document).on('change', '#'+objectData.id, this.onChangeForAllElements);
     $(document).on('click', '#'+objectData.id, this.onClickForAllElements);
+    $(document).on('focus', '#'+objectData.id, this.onClickForAllElements);
 
 
     // onChangeForAllElements
@@ -1268,7 +1144,7 @@ const lendingProduct = React.createClass({
         if (array[i][prop] === key) {
           // console.log('FINAL RESULT',array[i]);
           // if(key=='Accural Start Basis') {
-            // console.log('@@@@@@@@',array[i]);
+          // console.log('@@@@@@@@',array[i]);
           // }
           return array[i];
         }

@@ -5,9 +5,8 @@ import { routerReducer } from 'react-router-redux';
 //import reducers
 
 import existinglendingProducts from './existingLendingProducts';
-import newLendingProduct from './newLendingProduct';
 
-const rootReducer = combineReducers({existinglendingProducts, newLendingProduct, routing: routerReducer});
+const rootReducer = combineReducers({existinglendingProducts, routing: routerReducer});
 
 // in combineReducers we need to pass in the reducers and also the routing because we will have three things stored in our store, posts, comments and also the changes of our urls
 

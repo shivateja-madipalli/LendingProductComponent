@@ -1,18 +1,6 @@
 import React, { Component } from 'react';
 import LendingProductContainer from '../containers/LendingProductContainer.js';
-import RootComponentContainer from '../containers/RootComponentContainer.js';
-// import PostsList from '../containers/PostsListContainer.js';
-
-// class MainPage extends Component {
-//   render() {
-//     return (
-//       <div>
-//         <LendingProductContainer/>
-//
-//       </div>
-//     );
-//   }
-// }
+// import CMWContainer from '../containers/CMWContainer.js';
 
 class MainPage extends Component {
   render() {
@@ -24,5 +12,16 @@ class MainPage extends Component {
     );
   }
 }
+
+// class MainPage extends Component {
+//   render() {
+//     return (
+//       <div>
+//         <CMWContainer/>
+//
+//       </div>
+//     );
+//   }
+// }
 
 export default MainPage;

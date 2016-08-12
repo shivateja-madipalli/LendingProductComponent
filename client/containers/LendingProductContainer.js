@@ -15,8 +15,7 @@ import {testActiontoTestRetrievingDataFromSalesForce, getDataFromDB, getBasicsDa
 function mapStateToProps(globalState) {
   console.log('mapStateToProps in LendingProductContainer', globalState);
   return {
-    existinglendingProducts: globalState.existinglendingProducts,
-    newLendingProduct: globalState.newLendingProduct
+    existinglendingProducts: globalState.existinglendingProducts
   };
 }
 

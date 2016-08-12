@@ -1,14 +1,66 @@
 const LendingProductFields = {
+
+  "InitialState" : {
+    "basicData" : {},
+    "interestData" : {},
+    "accountingData" : {},
+    "allEnterData" :
+    {
+      "allData": {},
+      "completed":
+      [{
+        "name":"ProfileElements",
+        "value" : false
+      },
+  		{
+        "name": "FeesElements",
+        "value": false
+      },
+      {
+        "name":"TermElements",
+        "value": false
+      },
+      {
+        "name":"InterestElements",
+        "value": false
+      },
+      {
+        "name":"ProtectElements",
+        "value": false
+      },
+      {
+        "name":"FundingElements",
+        "value": false
+      },
+      {
+        "name":"TolerenceElements",
+        "value": false
+      },
+      {
+        "name":"AccountingElements",
+        "value": false
+      }]
+    },
+    "isLoading" : true,
+    "reRenderElements" : false,
+    "currentPage": "",
+    "confirmationFromSFAfterInsertingLoan": {},
+    "feeSetUrl": "",
+    "exisitingfeeSets" : {},
+    "HelpTextData": {}
+  },
+
   "AllPages": [
-    		"ProfileElements",
-    		"FeesElements",
-        "TermElements",
-        "InterestElements",
-        "ProtectElements",
-        "FundingElements",
-        "TolerenceElements",
-        "AccountingElements"
-    	],
+		"ProfileElements",
+		"FeesElements",
+    "TermElements",
+    "InterestElements",
+    "ProtectElements",
+    "FundingElements",
+    "TolerenceElements",
+    "AccountingElements"
+	],
+
 
 "ProfileElements": [
   {
