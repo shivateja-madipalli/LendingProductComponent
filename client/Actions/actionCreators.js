@@ -1,6 +1,6 @@
   // Action Creators
 
-import {getData, getBasicsData, getInterestData, getAccountingData, submitLoanData, getFeeSetUrl, getExisitingFeeSets} from '../api/serverCalls';
+import {getData, getBasicsData, getInterestData, getAccountingData, submitLoanData, getFeeSetUrl, getExisitingFeeSets, getHelperTextOfAllFields} from '../api/serverCalls';
 
 export function openExistingLendingProduct(LendingProductName, LendingProductId) {
   return {
@@ -75,6 +75,13 @@ export function submitForm(loanData) {
   return {
     type: 'SUBMIT_FORM',
     allDataInsertedConfirmation: submitLoanData(loanData)
+  }
+}
+
+export function getHelpTextOfAllElementsFromDB(elementIds) {
+  return {
+    type: 'GET_HELP_TEXT',
+    HelpTextData: getHelperTextOfAllFields(elementIds)
   }
 }
 

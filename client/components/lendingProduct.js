@@ -44,6 +44,8 @@ const lendingProduct = React.createClass({
 
 
   getInitialState() {
+    console.log('getInitialState');
+
     // console.log('the Keys:', Object.keys(LPFields.default));
     let LPFieldsArray = Object.keys(LPFields.default);
     let completedData = {
@@ -52,7 +54,8 @@ const lendingProduct = React.createClass({
 
       }
     };
-    // console.log(LPFieldsArray.length);
+
+
     LPFieldsArray.map(function(individualPage) {
       completedData.completed.push (
         {
@@ -71,7 +74,8 @@ const lendingProduct = React.createClass({
       currentPage: "",
       confirmationFromSFAfterInsertingLoan: {},
       feeSetUrl: "",
-      exisitingfeeSets : {}
+      exisitingfeeSets : {},
+      HelpTextData: {}
     }
   },
 
@@ -88,9 +92,29 @@ const lendingProduct = React.createClass({
 
   componentWillReceiveProps(NextProps) {
     // console.log('componentWillReceiveProps', NextProps);
+
+    if(NextProps.existinglendingProducts.HelpTextData) {
+      NextProps.existinglendingProducts.HelpTextData.then(function(data) {
+        console.log('HelpText DATA FROM CMP PROPS', data);
+        this.setState({
+          basicData : this.state.basicData,
+          interestData : this.state.interestData,
+          accountingData : this.state.accountingData,
+          allEnterData : this.state.allEnterData,
+          isLoading: false,
+          reRenderElements : true,
+          currentPage: this.state.currentPage,
+          confirmationFromSFAfterInsertingLoan: this.state.confirmationFromSFAfterInsertingLoan,
+          feeSetUrl: this.state.feeSetUrl,
+          exisitingfeeSets : this.state.exisitingfeeSets,
+          HelpTextData : data
+        })
+      }.bind(this));
+    }
+
     if(NextProps.existinglendingProducts.basicData) {
       NextProps.existinglendingProducts.basicData.then(function(data) {
-        // console.log('DATA FROM CMP PROPS', data);
+        console.log('BASIC DATA FROM CMP PROPS', data);
         this.setState({
           basicData : data,
           interestData : this.state.interestData,
@@ -101,7 +125,8 @@ const lendingProduct = React.createClass({
           currentPage: this.state.currentPage,
           confirmationFromSFAfterInsertingLoan: this.state.confirmationFromSFAfterInsertingLoan,
           feeSetUrl: this.state.feeSetUrl,
-          exisitingfeeSets : this.state.exisitingfeeSets
+          exisitingfeeSets : this.state.exisitingfeeSets,
+          HelpTextData: this.state.HelpTextData
         })
       }.bind(this));
     }
@@ -119,7 +144,8 @@ const lendingProduct = React.createClass({
           currentPage: this.state.currentPage,
           confirmationFromSFAfterInsertingLoan: this.state.confirmationFromSFAfterInsertingLoan,
           feeSetUrl: this.state.feeSetUrl,
-          exisitingfeeSets : this.state.exisitingfeeSets
+          exisitingfeeSets : this.state.exisitingfeeSets,
+          HelpTextData: this.state.HelpTextData
         })
       }.bind(this));
     }
@@ -137,7 +163,8 @@ const lendingProduct = React.createClass({
           currentPage: this.state.currentPage,
           confirmationFromSFAfterInsertingLoan: this.state.confirmationFromSFAfterInsertingLoan,
           feeSetUrl: this.state.feeSetUrl,
-          exisitingfeeSets : this.state.exisitingfeeSets
+          exisitingfeeSets : this.state.exisitingfeeSets,
+          HelpTextData: this.state.HelpTextData
         })
       }.bind(this));
     }
@@ -161,7 +188,8 @@ const lendingProduct = React.createClass({
           currentPage: this.state.currentPage,
           confirmationFromSFAfterInsertingLoan: this.state.confirmationFromSFAfterInsertingLoan,
           feeSetUrl: this.state.feeSetUrl,
-          exisitingfeeSets : this.state.exisitingfeeSets
+          exisitingfeeSets : this.state.exisitingfeeSets,
+          HelpTextData: this.state.HelpTextData
         })
       }.bind(this));
     }
@@ -179,7 +207,8 @@ const lendingProduct = React.createClass({
           confirmationFromSFAfterInsertingLoan : this.state.confirmationFromSFAfterInsertingLoan,
           currentPage: this.state.currentPage,
           feeSetUrl: data,
-          exisitingfeeSets : this.state.exisitingfeeSets
+          exisitingfeeSets : this.state.exisitingfeeSets,
+          HelpTextData: this.state.HelpTextData
         })
       }.bind(this));
     }
@@ -198,7 +227,8 @@ const lendingProduct = React.createClass({
           confirmationFromSFAfterInsertingLoan : this.state.confirmationFromSFAfterInsertingLoan,
           currentPage: this.state.currentPage,
           feeSetUrl: this.state.feeSetUrl,
-          exisitingfeeSets : data
+          exisitingfeeSets : data,
+          HelpTextData: this.state.HelpTextData
         })
       }.bind(this));
     }
@@ -211,11 +241,14 @@ const lendingProduct = React.createClass({
   },
 
   componentDidUpdate() {
+    // Display True The First Div
     console.log('componentDidUpdate');
     // div show
     // LPFields.default[thisVal.state.currentPage]
     // $('#' + LPFields.default['AllPages'][0] + '_MainDiv').show();
     $('#' + LPFields.default.AllPages[0] + '_MainDiv').addClass('displayBlock').removeClass('displayNone');
+    $('#' + LPFields.default.AllPages[0] + '_NavBtn').addClass('backGroundBlueColor');
+    $('#' + LPFields.default.AllPages[0] + '_NavBtn').addClass('colorWhite');
     // $('#navigationNextBtn').attr('disabled', true);
     // $('#saveLendingProductBtn').attr('disabled', true);
   },
@@ -341,8 +374,7 @@ const lendingProduct = React.createClass({
         <div id="rightDiv_TOP" className="slds-modal__header">
         <p className="slds-text-heading--medium slds-truncate" title="Exisiting Lending Product">Help Text</p>
         </div>
-        <div>
-        <p id="HelpTextValue" ></p>
+        <div id="HelpTextValue">
         </div>
         </div>
         </div>
@@ -416,9 +448,6 @@ const lendingProduct = React.createClass({
     // console.log(this.state.allEnterData);
   },
 
-
-
-
   onClickForFeeSet(e) {
     // console.log('FeeSet Clicked');
     if(e.target.id === "createNewFeeSetBtn")
@@ -456,44 +485,38 @@ const lendingProduct = React.createClass({
     }
   },
 
-
   onClickForAllElements(e) {
     // console.log(this.state.basicData.basicsData);
     // console.log(e.target.parentNode.parentNode.childNodes[0].innerHTML);
     // console.log(e.target.name);
 
-    if(e.target.name == "ProfileElements") {
-      // console.log('inside comparision');
-      let helpTextVal = this.state.basicData.basicsData.map(function(individualBasicData) {
-        if(individualBasicData.label === e.target.parentNode.parentNode.childNodes[0].innerHTML) {
-          // console.log('returningVal', individualBasicData);
-          return individualBasicData.help_text;
-        }
-      });
-      if(helpTextVal) {
-        // console.log('appending helptext', helpTextVal);
-        $('#HelpTextValue').text(helpTextVal);
-      }
-      else{
-        $('#HelpTextValue').text("Yet to upload");
-      }
+
+    // get the help text from state.existinglendingProducts.HelpTextData and populate it in help text div
+
+
+    let helpTextFound = this.getElementHelpText(e.target.id, this);
+    // console.log(helpTextFound);
+    if(helpTextFound[0].helpText) {
+      $('#HelpTextValue').text(helpTextFound[0].helpText);
     }
 
     if(e.target.id === "existingFeeSetRdbtn") {
       $('#existingFeeSetSelect').removeClass('displayNone');
       $('#createNewFeeSetBtn').addClass('displayNone');
-      // if(this.state.feeSetUrl){
-      //     console.log(this.state.feeSetUrl.feeSetUrl);
-      //     // window.open(this.state.feeSetUrl.feeSetUrl,'popUpWindow','height=60%,width=80%,left=10,top=10,,scrollbars=yes,menubar=no');
-      //     window.open(this.state.feeSetUrl.feeSetUrl);
-      //     return false;
-      // }
     }
     else if(e.target.id === "loan__Fee_Set__c") {
       $('#createNewFeeSetBtn').removeClass('displayNone');
       $('#existingFeeSetSelect').addClass('displayNone');
     }
-    // $('#HelpTextValue').val();
+  },
+
+  getElementHelpText(elementId, thisVal) {
+    let data = thisVal.state.HelpTextData.helpTextWithElementId;
+    return data.filter(
+        function(data){
+          return data.elementId === elementId;
+        }
+    );
   },
 
   ///a2Y61000000YgWCEA0
@@ -503,6 +526,7 @@ const lendingProduct = React.createClass({
   and then move the execution to the next page
   */
 
+  // Next Button
   navigateBetweenPages(e, thisVal) {
     e.preventDefault();
     if(thisVal.state.currentPage !== "") {
@@ -797,12 +821,14 @@ const lendingProduct = React.createClass({
       feeSetUrl: this.state.feeSetUrl
     })
 
+    // this is earlier
     $('#' + LPFields.default.AllPages[currentPageIndex - 1] + '_NavBtn').removeClass('backGroundGreenColor');
-    $('#' + LPFields.default.AllPages[currentPageIndex - 1] + '_NavBtn').removeClass('colorWhite');
+    $('#' + LPFields.default.AllPages[currentPageIndex - 1] + '_NavBtn').addClass('backGroundBlueColor');
+    $('#' + LPFields.default.AllPages[currentPageIndex - 1] + '_NavBtn').addClass('colorWhite');
 
-    // $('#' + LPFields.default.AllPages[currentPageIndex - 1] + '_NavBtn').addClass('backGroundBlueColor');
-    // $('#' + LPFields.default.AllPages[currentPageIndex - 1] + '_NavBtn').removeClass('colorWhite');
-
+    // this is current page
+    $('#' + LPFields.default.AllPages[currentPageIndex] + '_NavBtn').removeClass('backGroundBlueColor');
+    $('#' + LPFields.default.AllPages[currentPageIndex] + '_NavBtn').removeClass('colorWhite');
   },
 
   submitForm(e) {
@@ -853,8 +879,39 @@ const lendingProduct = React.createClass({
       'loan__Interest_Calculation_Method__c',
       'loan__Frequency_of_Loan_Payment__c',
       'loan__Time_Counting_Method__c',
+      'loan__Accrual_Start_Basis__c',
       'loan__Payment_Application_Mode__c'
+
     ]
+
+
+    //Get the HelpText Data from DB
+
+    // get all the id values from 'LPFields' JSON
+
+    let jsonWithAllElementIds = [];
+
+    /*
+      "elementId" : "",
+      "HelpText" :
+    */
+
+
+
+    let LPFieldsArray = Object.keys(LPFields.default);
+
+    for(let i=1;i<LPFieldsArray.length;i++) {
+      for(let j=0;j<LPFields.default[LPFieldsArray[i]].length;j++) {
+        // jsonWithAllElementIds[LPFields.default[LPFieldsArray[i]][j].id] = "";
+        jsonWithAllElementIds.push({
+          "elementId" : LPFields.default[LPFieldsArray[i]][j].id,
+          "HelpText" : ""
+        });
+      }
+    }
+    // console.log('FINAL JSON WITH ALL ELEMENT IDS', jsonWithAllElementIds);
+
+    this.props.getHelpTextOfAllElementsFromDB(JSON.stringify(jsonWithAllElementIds));
 
 
     //These three are the working things
@@ -870,7 +927,6 @@ const lendingProduct = React.createClass({
 
     //get exisiting fee set data
     this.props.getExisitingFeeSetsFromDB();
-
   },
 
   // processPickListValues(individualPageData, htmlElement, dataLabelName, selfVal) {
@@ -1007,7 +1063,6 @@ const lendingProduct = React.createClass({
     let htmlStartElement = null;
     let htmlEndElement = null;
 
-
     htmlStartElement = thisVal.createStartingElement(objectData, thisVal, type);
     if(objectData.type === "checkbox" || objectData.type === "radio") {
     }
@@ -1050,6 +1105,9 @@ const lendingProduct = React.createClass({
         //access data from state
         if(this.state.exisitingfeeSets.existingFeeSets) {
           // console.log(this.state.exisitingfeeSets.existingFeeSets);
+
+
+
           selectForExisitingFeeSetData += thisVal.createOptionsForPickList(this.state.exisitingfeeSets.existingFeeSets);
         }
         selectForExisitingFeeSetData +='</select>';
@@ -1075,9 +1133,20 @@ const lendingProduct = React.createClass({
 
       if(objectData.element === "select" && wholeDatsOfThisType != undefined && type != "AccountingElements") {
         let resultVal = thisVal.searchArray(wholeDatsOfThisType, objectData.label, 'label');
+
+        // if(objectData.id == "loan__Accrual_Start_Basis__c") {
+        //   console.log('#######################');
+        //   console.log(objectData);
+        //   console.log(wholeDatsOfThisType);
+        //   console.log('#######################');
+        // }
+
         // pickListValues = resultVal.picklist;
         let optionsForPickList;
         if(resultVal) {
+
+
+
           optionsForPickList = thisVal.createOptionsForPickList(resultVal.picklist);
         }
         finalElement += optionsForPickList;
@@ -1185,13 +1254,22 @@ const lendingProduct = React.createClass({
   },
 
   searchArray(array, key, prop) {
+    // console.log('$$$$$$$$$$$');
+    // console.log(array);
+    // console.log(key);
+    // console.log(prop);
+    // console.log('$$$$$$$$$$$');
     if(array != undefined) {
       prop = (typeof prop === 'undefined') ? 'name' : prop;
 
       for (var i=0; i < array.length; i++) {
         // console.log('VAL with PROP',array[i][prop]);
+        // console.log('key',key);
         if (array[i][prop] === key) {
           // console.log('FINAL RESULT',array[i]);
+          // if(key=='Accural Start Basis') {
+            // console.log('@@@@@@@@',array[i]);
+          // }
           return array[i];
         }
       }

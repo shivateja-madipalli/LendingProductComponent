@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import lendingProduct from '../components/lendingProduct';
-import {testActiontoTestRetrievingDataFromSalesForce, getDataFromDB, getBasicsDataFromDB, getInterestDataFromDB, getAccountingDataFromDB, submitForm, getFeeSetUrlFromDB, getExisitingFeeSetsFromDB} from '../actions/actionCreators';
+import {testActiontoTestRetrievingDataFromSalesForce, getDataFromDB, getBasicsDataFromDB, getInterestDataFromDB, getAccountingDataFromDB, submitForm, getFeeSetUrlFromDB, getExisitingFeeSetsFromDB, getHelpTextOfAllElementsFromDB} from '../actions/actionCreators';
 
 
 // mapStateToProps is called when ever the state is changed
@@ -63,6 +63,10 @@ const mapDispatchToProps = (dispatch) => {
 
    getExisitingFeeSetsFromDB: () => {
      dispatch(getExisitingFeeSetsFromDB())
+   },
+
+   getHelpTextOfAllElementsFromDB: (elementIds) => {
+     dispatch(getHelpTextOfAllElementsFromDB(elementIds))
    }
 
   }

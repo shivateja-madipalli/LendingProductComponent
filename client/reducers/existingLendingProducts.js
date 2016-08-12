@@ -8,7 +8,8 @@ const INITIAL_STATE = {
   currentPage: "",
   confirmationFromSFAfterInsertingLoan : {},
   feeSetUrl: "",
-  exisitingfeeSets : {}
+  exisitingfeeSets : {},
+  HelpTextData: {}
 };
 
 // const INITIAL_STATE = {
@@ -69,28 +70,32 @@ function existingLendingProducts(state = INITIAL_STATE, action) {
     */
 
     case "RETRIEVE_BASICSPAGE_DATA":
-    return { ...state, basicData: action.jsonValueOfBasicsPage, interestData: state.interestData, accountingData: state.accountingData, allEnterData: {}, isLoading: false, reRenderElements: state.reRenderElements, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan,feeSetUrl: state.feeSetUrl, exisitingfeeSets: state.exisitingfeeSets};
+    return { ...state, basicData: action.jsonValueOfBasicsPage, interestData: state.interestData, accountingData: state.accountingData, allEnterData: {}, isLoading: false, reRenderElements: state.reRenderElements, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan,feeSetUrl: state.feeSetUrl, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData};
 
 
     case "RETRIEVE_INTERESTPAGE_DATA":
 
-    return { ...state, basicData: state.basicData, interestData: action.jsonValueOfInterestPage, accountingData: state.accountingData, allEnterData: {}, isLoading: false, reRenderElements: state.reRenderElements, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan,feeSetUrl: state.feeSetUrl, exisitingfeeSets: state.exisitingfeeSets};
+    return { ...state, basicData: state.basicData, interestData: action.jsonValueOfInterestPage, accountingData: state.accountingData, allEnterData: {}, isLoading: false, reRenderElements: state.reRenderElements, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan,feeSetUrl: state.feeSetUrl, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData};
 
     case "RETRIEVE_ACCOUNTINGPAGE_DATA":
 
-    return {...state, basicData: state.basicData, interestData: state.interestData, accountingData: action.jsonValueOfAccountingPage, allEnterData: {}, isLoading: false, reRenderElements: state.reRenderElements, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan,feeSetUrl: state.feeSetUrl, exisitingfeeSets: state.exisitingfeeSets};
+    return {...state, basicData: state.basicData, interestData: state.interestData, accountingData: action.jsonValueOfAccountingPage, allEnterData: {}, isLoading: false, reRenderElements: state.reRenderElements, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan,feeSetUrl: state.feeSetUrl, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData};
 
     case "RETRIEVE_FEESET_URL":
 
-    return {...state, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: {}, isLoading: false, reRenderElements: state.reRenderElements, feeSetUrl: action.feeSetUrl, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan, exisitingfeeSets: state.exisitingfeeSets};
+    return {...state, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: {}, isLoading: false, reRenderElements: state.reRenderElements, feeSetUrl: action.feeSetUrl, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData};
 
     case "EXISITING_FEESET_DATA":
 
-    return {...state, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: {}, isLoading: false, reRenderElements: state.reRenderElements, feeSetUrl: state.feeSetUrl, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan, exisitingfeeSets: action.exisitingFeeSetData};
+    return {...state, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: {}, isLoading: false, reRenderElements: state.reRenderElements, feeSetUrl: state.feeSetUrl, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan, exisitingfeeSets: action.exisitingFeeSetData, HelpTextData: state.HelpTextData};
 
     case "SUBMIT_FORM":
 
-    return {...state, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: {}, isLoading: state.isLoading, reRenderElements: state.reRenderElements, confirmationFromSFAfterInsertingLoan : action.allDataInsertedConfirmation, feeSetUrl: action.feeSetUrl, currentPage: state.currentPage, exisitingfeeSets: state.exisitingfeeSets};
+    return {...state, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: {}, isLoading: state.isLoading, reRenderElements: state.reRenderElements, confirmationFromSFAfterInsertingLoan : action.allDataInsertedConfirmation, feeSetUrl: state.feeSetUrl, currentPage: state.currentPage, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData};
+
+    case "GET_HELP_TEXT":
+
+    return {...state, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: {}, isLoading: state.isLoading, reRenderElements: state.reRenderElements, confirmationFromSFAfterInsertingLoan : state.allDataInsertedConfirmation, feeSetUrl: state.feeSetUrl, currentPage: state.currentPage, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: action.HelpTextData};
 
     default:
     return state;

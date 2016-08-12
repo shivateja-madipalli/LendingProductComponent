@@ -27,6 +27,31 @@ export function getData(AccountingPage, InterestPage, BasicsPage) {
   });
 }
 
+export function getHelperTextOfAllFields(listOfAllElementIds) {
+  return new Promise((resolve, reject) => {
+    try {
+      CL_SimpleLoanProduct_Controller.getHelperTextOfAllFields(listOfAllElementIds, function(Result, event){
+        if (event.status)
+        {
+          console.log('Result=',Result);
+
+          if(Result!= '')
+          {
+            // console.log('INFORMATION=',Result);
+          }
+          else
+          {
+            // console.log('PROBLEM WITH INFORMATION=',Result);
+          }
+        }
+        return resolve({helpTextWithElementId: Result});
+      }, {escape:true});
+    }
+    catch(ex) {
+      console.log('Exception', ex);
+    }
+  });
+}
 
 export function getBasicsData(BasicsPage) {
   return new Promise((resolve, reject) => {
