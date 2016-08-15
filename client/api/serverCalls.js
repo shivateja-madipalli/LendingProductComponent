@@ -183,6 +183,31 @@ export function getExisitingFeeSets() {
   });
 }
 
+export function getCustomFieldDetails(fieldId, isPickList) {
+  return new Promise((resolve, reject) => {
+    try {
+      CL_SimpleLoanProduct_Controller.getCustomFieldDetails(fieldId, isPickList, function(Result, event){
+        if (event.status)
+        {
+          console.log('Result=',Result);
+
+          if(Result!= '')
+          {
+            // console.log('INFORMATION=',Result);
+          }
+          else
+          {
+            // console.log('PROBLEM WITH INFORMATION=',Result);
+          }
+        }
+        return resolve({customFieldDetails: Result});
+      }, {escape:true});
+    }
+    catch(ex) {
+      console.log('Exception', ex);
+    }
+  });
+}
 
 // export function getData() {
 //   return new Promise((resolve, reject) => {

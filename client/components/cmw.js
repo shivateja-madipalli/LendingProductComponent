@@ -8,7 +8,7 @@ const cmw = React.createClass({
     // FIRST
     console.log('getInitialState');
     return {
-      test: {}
+      test: ""
     }
   },
 
@@ -19,7 +19,7 @@ const cmw = React.createClass({
 
   render() {
     // Third
-    console.log('RENDER');
+    console.log('RENDER', this.props);
     return (
       <div>
         <p> CMW Component </p>
@@ -30,16 +30,25 @@ const cmw = React.createClass({
   componentDidMount() {
     // FOURTH
     console.log('componentDidMount');
+    this.setState({
+      test: "Test Value"
+    })
   },
 
   componentWillReceiveProps(NextProps) {
     // Fifth
-    console.log('componentWillReceiveProps');
+    console.log('componentWillReceiveProps', NextProps);
   },
 
   shouldComponentUpdate() {
     // Sixth
     console.log('shouldComponentUpdate');
+    if(this.state.test) {
+      return true;
+    }
+    else {
+      return false;
+    }
   },
 
   componentWillUnmount() {

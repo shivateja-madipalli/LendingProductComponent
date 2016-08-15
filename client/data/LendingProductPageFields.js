@@ -50,6 +50,32 @@ const LendingProductFields = {
     "HelpTextData": {}
   },
 
+  "Pages_Select_Element_Ids": {
+    "AccountingPage": [
+      "loan__Product_Asset_Account__c",
+      "loan__Product_Loan_Control_Account__c",
+      "loan__Product_Interest_Income_Account__c",
+      "loan__Product_Interest_Amortization_Account__c",
+      "loan__Product_Loan_Loss_Provision_Account__c",
+      "loan__Product_Loan_Loss_Reserve_Account__c",
+      "loan__Product_Loan_Purchase_Payable_Account__c",
+      "loan__Product_Loan_Purchase_Receivable_Account__c",
+      "loan__Product_Service_Fee_Income_Account__c",
+      "loan__Product_Excess_Account__c",
+      "loan__Product_Write_Off_Recovery_Account__c"
+    ],
+    "InterestPage": [
+      "loan__Interest_Rate_Type__c"
+    ],
+    "BasicsPage": [
+      "loan__Interest_Calculation_Method__c",
+      "loan__Frequency_of_Loan_Payment__c",
+      "loan__Time_Counting_Method__c",
+      "loan__Accrual_Start_Basis__c",
+      "loan__Payment_Application_Mode__c"
+    ]
+  },
+
   "AllPages": [
 		"ProfileElements",
 		"FeesElements",
@@ -446,7 +472,23 @@ const LendingProductFields = {
       "slds-form-element__label",
       "clearBoth"
     ],
-    "isRequired" : false
+    "isRequired" : false,
+    "dependentElements" : [
+      {
+        "element": "select",
+        "elementClassName": [
+          "slds-select_container",
+          "slds-select"
+        ],
+        "id": "loan__Protect_Type__c",
+        "label": "Protect Type",
+        "labelClassName" : [
+          "slds-form-element__label",
+          "clearBoth"
+        ],
+        "isRequired" : false
+      }
+    ]
   }
 ],
 "FundingElements" : [

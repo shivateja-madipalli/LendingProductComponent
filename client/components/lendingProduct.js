@@ -40,39 +40,40 @@ const lendingProduct = React.createClass({
 
   getInitialState() {
 
-    // console.log('getInitialState');
-    // console.log('the Keys:', Object.keys(LPFields.default));
-    // let LPFieldsArray = Object.keys(LPFields.default);
-    // let completedData = {
-    //   completed: [],
-    //   allData: {}
-    // };
-
-    // LPFieldsArray.map(function(individualPage) {
-    //   completedData.completed.push (
-    //     {
-    //       'FieldName' : individualPage,
-    //       'value' : false
-    //     }
-    //   );
-    // });
-
-    // return {
-    //   basicData : {},
-    //   interestData : {},
-    //   accountingData : {},
-    //   allEnterData : completedData,
-    //   isLoading : true,
-    //   reRenderElements : false,
-    //   currentPage: "",
-    //   confirmationFromSFAfterInsertingLoan: {},
-    //   feeSetUrl: "",
-    //   exisitingfeeSets : {},
-    //   HelpTextData: {}
-    // }
-
     console.log('getInitialState');
-    return LPFields.default.InitialState;
+    console.log('the Keys:', Object.keys(LPFields.default));
+    let LPFieldsArray = Object.keys(LPFields.default);
+    let completedData = {
+      completed: [],
+      allData: {}
+    };
+
+    LPFieldsArray.map(function(individualPage) {
+      completedData.completed.push (
+        {
+          'FieldName' : individualPage,
+          'value' : false
+        }
+      );
+    });
+
+    return {
+      basicData : {},
+      interestData : {},
+      accountingData : {},
+      allEnterData : completedData,
+      isLoading : true,
+      reRenderElements : false,
+      currentPage: "",
+      confirmationFromSFAfterInsertingLoan: {},
+      feeSetUrl: "",
+      exisitingfeeSets : {},
+      HelpTextData: {},
+      ProtectType: {}
+    }
+
+    // console.log('getInitialState');
+    // return LPFields.default.InitialState;
   },
 
   componentWillMount() {
@@ -103,6 +104,7 @@ const lendingProduct = React.createClass({
           confirmationFromSFAfterInsertingLoan: this.state.confirmationFromSFAfterInsertingLoan,
           feeSetUrl: this.state.feeSetUrl,
           exisitingfeeSets : this.state.exisitingfeeSets,
+          ProtectType: this.state.ProtectType,
           HelpTextData : data
         })
       }.bind(this));
@@ -122,7 +124,8 @@ const lendingProduct = React.createClass({
           confirmationFromSFAfterInsertingLoan: this.state.confirmationFromSFAfterInsertingLoan,
           feeSetUrl: this.state.feeSetUrl,
           exisitingfeeSets : this.state.exisitingfeeSets,
-          HelpTextData: this.state.HelpTextData
+          HelpTextData: this.state.HelpTextData,
+          ProtectType: this.state.ProtectType
         })
       }.bind(this));
     }
@@ -141,7 +144,8 @@ const lendingProduct = React.createClass({
           confirmationFromSFAfterInsertingLoan: this.state.confirmationFromSFAfterInsertingLoan,
           feeSetUrl: this.state.feeSetUrl,
           exisitingfeeSets : this.state.exisitingfeeSets,
-          HelpTextData: this.state.HelpTextData
+          HelpTextData: this.state.HelpTextData,
+          ProtectType: this.state.ProtectType
         })
       }.bind(this));
     }
@@ -160,7 +164,8 @@ const lendingProduct = React.createClass({
           confirmationFromSFAfterInsertingLoan: this.state.confirmationFromSFAfterInsertingLoan,
           feeSetUrl: this.state.feeSetUrl,
           exisitingfeeSets : this.state.exisitingfeeSets,
-          HelpTextData: this.state.HelpTextData
+          HelpTextData: this.state.HelpTextData,
+          ProtectType: this.state.ProtectType
         })
       }.bind(this));
     }
@@ -185,7 +190,8 @@ const lendingProduct = React.createClass({
           confirmationFromSFAfterInsertingLoan: this.state.confirmationFromSFAfterInsertingLoan,
           feeSetUrl: this.state.feeSetUrl,
           exisitingfeeSets : this.state.exisitingfeeSets,
-          HelpTextData: this.state.HelpTextData
+          HelpTextData: this.state.HelpTextData,
+          ProtectType: this.state.ProtectType
         })
         if(data.finalResponseAfterInsertion !== null) {
           location.reload();
@@ -207,7 +213,8 @@ const lendingProduct = React.createClass({
           currentPage: this.state.currentPage,
           feeSetUrl: data,
           exisitingfeeSets : this.state.exisitingfeeSets,
-          HelpTextData: this.state.HelpTextData
+          HelpTextData: this.state.HelpTextData,
+          ProtectType: this.state.ProtectType
         })
       }.bind(this));
     }
@@ -227,16 +234,36 @@ const lendingProduct = React.createClass({
           currentPage: this.state.currentPage,
           feeSetUrl: this.state.feeSetUrl,
           exisitingfeeSets : data,
-          HelpTextData: this.state.HelpTextData
+          HelpTextData: this.state.HelpTextData,
+          ProtectType: this.state.ProtectType
         })
       }.bind(this));
     }
 
+    // Exisiting ProtectType Data
+    if(NextProps.existinglendingProducts.ProtectType) {
+      NextProps.existinglendingProducts.ProtectType.then(function(data) {
+        console.log('Exisiting PROTECT TYPE FROM CMP PROPS', data);
+        this.setState({
+          basicData : this.state.basicData,
+          interestData : this.state.interestData,
+          allEnterData : this.state.allEnterData,
+          accountingData : this.state.accountingData,
+          isLoading: this.state.isLoading,
+          reRenderElements : this.state.reRenderElements,
+          confirmationFromSFAfterInsertingLoan : this.state.confirmationFromSFAfterInsertingLoan,
+          currentPage: this.state.currentPage,
+          feeSetUrl: this.state.feeSetUrl,
+          exisitingfeeSets : this.state.exisitingfeeSets,
+          HelpTextData: this.state.HelpTextData,
+          ProtectType: data
+        })
+      }.bind(this));
+    }
   },
 
   componentWillUnmount() {
     console.log('componentWillUnmount');
-    alert('componentWillUnmount');
   },
 
   componentDidUpdate() {
@@ -245,6 +272,8 @@ const lendingProduct = React.createClass({
     // div show
     // LPFields.default[thisVal.state.currentPage]
     // $('#' + LPFields.default['AllPages'][0] + '_MainDiv').show();
+
+    // Display True the first div + Bread Crumb First button
     $('#' + LPFields.default.AllPages[0] + '_MainDiv').addClass('displayBlock').removeClass('displayNone');
     $('#' + LPFields.default.AllPages[0] + '_NavBtn').addClass('backGroundBlueColor');
     $('#' + LPFields.default.AllPages[0] + '_NavBtn').addClass('colorWhite');
@@ -393,12 +422,10 @@ const lendingProduct = React.createClass({
     }
   },
 
-  // onChange event
+  // onChange event for All Elements
   onChangeForAllElements(e) {
     // have to check whether the concerned page's isRequired values are filled or not.
     // store each and every element's value in a json obj and set state
-
-    // todo: validation on elements
 
     //create json
 
@@ -407,17 +434,29 @@ const lendingProduct = React.createClass({
 
     // console.log(jsonVal);
 
-    // !arr[i].trim()
+    // checking whether the value entered has any 'White Spaces'
     if(e.target.value.trim()) {
       //check for validations
+
+      // Why these values are hardcoded here?
+      /*
+        existingFeeSetRdbtn AND loan__Fee_Set__c 's On Change event is handled separately
+      */
+      console.log(e.target.id);
       if(e.target.id !== "existingFeeSetRdbtn" && e.target.id !== "loan__Fee_Set__c") {
-        jsonVal.allData[e.target.id] = e.target.value;
+        // console.log('ENTERED KNOWN TERRITORY');
+        if(e.target.type === "checkbox") {
+            jsonVal.allData[e.target.id] = $("#" + e.target.id).is(':checked');
+        }
+        else {
+          jsonVal.allData[e.target.id] = e.target.value;
+        }
         $('#divForErrorMessages').addClass('displayNone');
         $('#showErrorMessage').text('');
       }
     }
     else {
-
+      // console.log('ENTERED UNKNOWN TERRITORY');
       // show error saying the value is not entered
 
       $('#divForErrorMessages').removeClass('displayNone');
@@ -444,19 +483,20 @@ const lendingProduct = React.createClass({
       reRenderElements: false,
       currentPage: e.target.name,
       confirmationFromSFAfterInsertingLoan : this.state.confirmationFromSFAfterInsertingLoan,
-      feeSetUrl: this.state.feeSetUrl
+      feeSetUrl: this.state.feeSetUrl,
+      ProtectType: this.state.ProtectType
     })
     // $('#navigationNextBtn').removeAttr('disabled');
     // }
     // console.log(this.state.allEnterData);
   },
 
+  // This is for handling onClick event for FeeSet Radio Button
   onClickForFeeSet(e) {
     // console.log('FeeSet Clicked');
     if(e.target.id === "createNewFeeSetBtn")
     {
-
-      if(this.state.feeSetUrl){
+      if(this.state.feeSetUrl) {
         // console.log(this.state.feeSetUrl.feeSetUrl);
         // window.open(this.state.feeSetUrl.feeSetUrl,'popUpWindow','height=60%,width=80%,left=10,top=10,,scrollbars=yes,menubar=no');
         window.open(this.state.feeSetUrl.feeSetUrl);
@@ -483,11 +523,33 @@ const lendingProduct = React.createClass({
         reRenderElements: false,
         currentPage: this.state.currentPage,
         confirmationFromSFAfterInsertingLoan : this.state.confirmationFromSFAfterInsertingLoan,
-        feeSetUrl: this.state.feeSetUrl
+        feeSetUrl: this.state.feeSetUrl,
+        ProtectType: this.state.ProtectType
       })
     }
   },
 
+  onClickForProtectType(e) {
+    // setState with the data
+
+    let jsonVal = this.state.allEnterData;
+    jsonVal.allData[e.target.id] = e.target.value;
+    console.log('############', jsonVal);
+    this.setState({
+      basicData : this.state.basicData,
+      interestData : this.state.interestData,
+      accountingData : this.state.accountingData,
+      allEnterData : jsonVal,
+      isLoading: false,
+      reRenderElements: false,
+      currentPage: this.state.currentPage,
+      confirmationFromSFAfterInsertingLoan : this.state.confirmationFromSFAfterInsertingLoan,
+      feeSetUrl: this.state.feeSetUrl,
+      ProtectType: this.state.ProtectType
+    })
+  },
+
+  // On Click event for all Elements - used for handling and swapping HelpText Data
   onClickForAllElements(e) {
     // console.log(this.state.basicData.basicsData);
     // console.log(e.target.parentNode.parentNode.childNodes[0].innerHTML);
@@ -496,13 +558,13 @@ const lendingProduct = React.createClass({
 
     // get the help text from state.existinglendingProducts.HelpTextData and populate it in help text div
 
-
     let helpTextFound = this.getElementHelpText(e.target.id, this);
     // console.log(helpTextFound);
     if(helpTextFound[0].helpText) {
       $('#HelpTextValue').text(helpTextFound[0].helpText);
     }
 
+    // This is for handling Fee Set Radio button Display Swap
     if(e.target.id === "existingFeeSetRdbtn") {
       $('#existingFeeSetSelect').removeClass('displayNone');
       $('#createNewFeeSetBtn').addClass('displayNone');
@@ -511,8 +573,17 @@ const lendingProduct = React.createClass({
       $('#createNewFeeSetBtn').removeClass('displayNone');
       $('#existingFeeSetSelect').addClass('displayNone');
     }
+    else if(e.target.id === "loan__protect_enabled__c") {
+      if($('#' + e.target.id).is(':checked')) {
+        $('#loan__Protect_Type__c').removeClass('displayNone');
+      }
+      else {
+        $('#loan__Protect_Type__c').addClass('displayNone');
+      }
+    }
   },
 
+  // getting HelpText Data from Props
   getElementHelpText(elementId, thisVal) {
     let data = thisVal.state.HelpTextData.helpTextWithElementId;
     return data.filter(
@@ -536,40 +607,40 @@ const lendingProduct = React.createClass({
       $('#divForErrorMessages').addClass('displayNone');
       $('#showErrorMessage').text('');
 
-      let checkWhetherAllIsRequiredAreAnswered = false;
-      let checkWhetherIsRequiredIsInvoked = false;
-      let arrayToCheckWhetherAreThereAnyisRequired = [];
+      let checkWhetherAllIsRequiredElementsAreAnswered = false;
+      let checkWhetherIsRequiredElementIsInvoked = false;
+      let arrayToCheckWhetherAreThereAnyisRequiredElements = [];
       // console.log(thisVal.state.currentPage);
       for(let i=0; i < LPFields.default[thisVal.state.currentPage].length; i++) {
         let individualElement = LPFields.default[thisVal.state.currentPage][i];
         if(individualElement.isRequired) {
-          // arrayToCheckWhetherAreThereAnyisRequired.push(true);
+          // arrayToCheckWhetherAreThereAnyisRequiredElements.push(true);
           if(thisVal.state.allEnterData.allData.hasOwnProperty(individualElement.id)) {
-            checkWhetherAllIsRequiredAreAnswered = true;
-            checkWhetherIsRequiredIsInvoked = true;
+            checkWhetherAllIsRequiredElementsAreAnswered = true;
+            checkWhetherIsRequiredElementIsInvoked = true;
           }
           else {
-            checkWhetherAllIsRequiredAreAnswered = false;
-            arrayToCheckWhetherAreThereAnyisRequired = [];
+            checkWhetherAllIsRequiredElementsAreAnswered = false;
+            arrayToCheckWhetherAreThereAnyisRequiredElements = [];
             break;
           }
         }
         else {
           //for elements which does not have isRequired at all
-          if(!checkWhetherIsRequiredIsInvoked) {
-            arrayToCheckWhetherAreThereAnyisRequired.push(false);
+          if(!checkWhetherIsRequiredElementIsInvoked) {
+            arrayToCheckWhetherAreThereAnyisRequiredElements.push(false);
           }
         }
       }
 
-      if((arrayToCheckWhetherAreThereAnyisRequired.length !== 0 && arrayToCheckWhetherAreThereAnyisRequired.indexOf(false) !== -1)|| checkWhetherAllIsRequiredAreAnswered) {
+      if((arrayToCheckWhetherAreThereAnyisRequiredElements.length !== 0 && arrayToCheckWhetherAreThereAnyisRequiredElements.indexOf(false) !== -1)|| checkWhetherAllIsRequiredElementsAreAnswered) {
         // set State those who does not have any isRequired at all
         //move to next div
 
         let checkForAnyValidationErrors = false;
 
         //check for validations
-        // LPFields.default[thisVal.state.currentPage].map(function(individualElementOfThisPage) {
+
 
         loop1:
         for(let i=0; i<LPFields.default[thisVal.state.currentPage].length; i++) {
@@ -645,7 +716,6 @@ const lendingProduct = React.createClass({
             }
           }
         }
-        // });
 
         if(!checkForAnyValidationErrors) {
           $('#divForErrorMessages').addClass('displayNone');
@@ -671,7 +741,8 @@ const lendingProduct = React.createClass({
             allEnterData : this.state.allEnterData,
             isLoading: false,
             reRenderElements: false,
-            currentPage: LPFields.default.AllPages[currentPageIndex + 1]
+            currentPage: LPFields.default.AllPages[currentPageIndex + 1],
+            ProtectType: this.state.ProtectType
           })
 
           // this is previous
@@ -721,7 +792,8 @@ const lendingProduct = React.createClass({
       reRenderElements: false,
       currentPage: LPFields.default.AllPages[currentPageIndex - 1],
       confirmationFromSFAfterInsertingLoan : this.state.confirmationFromSFAfterInsertingLoan,
-      feeSetUrl: this.state.feeSetUrl
+      feeSetUrl: this.state.feeSetUrl,
+      ProtectType: this.state.ProtectType
     })
 
     // this is earlier
@@ -734,6 +806,7 @@ const lendingProduct = React.createClass({
     $('#' + LPFields.default.AllPages[currentPageIndex] + '_NavBtn').removeClass('colorWhite');
   },
 
+  // Submit the whole Data
   submitForm(e) {
     e.preventDefault();
     //accessing values with ref's
@@ -752,6 +825,7 @@ const lendingProduct = React.createClass({
     //   this.props.submitForm(this.state.allEnterData);
     // }
 
+    // console.log(this.state.allEnterData.allData);
     this.props.submitForm(this.state.allEnterData.allData);
     //call the required action
 
@@ -759,33 +833,15 @@ const lendingProduct = React.createClass({
     // console.log('VALUE:', this.loanProdNametxt.value);
   },
 
+  // getting data from DB, this method is the main method to bring out all of the data from DB
   getAllPickListData() {
-    let AccountingPage = [
-      'loan__Product_Asset_Account__c',
-      'loan__Product_Loan_Control_Account__c',
-      'loan__Product_Interest_Income_Account__c',
-      'loan__Product_Interest_Amortization_Account__c',
-      'loan__Product_Loan_Loss_Provision_Account__c',
-      'loan__Product_Loan_Loss_Reserve_Account__c',
-      'loan__Product_Loan_Purchase_Payable_Account__c',
-      'loan__Product_Loan_Purchase_Receivable_Account__c',
-      'loan__Product_Service_Fee_Income_Account__c',
-      'loan__Product_Excess_Account__c',
-      'loan__Product_Write_Off_Recovery_Account__c'
-    ];
 
-    let InterestPage = [
-      'loan__Interest_Rate_Type__c'
-    ];
-
-    let BasicsPage = [
-      'loan__Interest_Calculation_Method__c',
-      'loan__Frequency_of_Loan_Payment__c',
-      'loan__Time_Counting_Method__c',
-      'loan__Accrual_Start_Basis__c',
-      'loan__Payment_Application_Mode__c'
-
-    ]
+    // console.log(LPFields.default.Pages_Select_Element_Ids.AccountingPage);
+    let AccountingPage = LPFields.default.Pages_Select_Element_Ids.AccountingPage;
+    // console.log(LPFields.default.Pages_Select_Element_Ids.InterestPage);
+    let InterestPage = LPFields.default.Pages_Select_Element_Ids.InterestPage;
+    // console.log(LPFields.default.Pages_Select_Element_Ids.BasicsPage);
+    let BasicsPage = LPFields.default.Pages_Select_Element_Ids.BasicsPage;
 
 
     //Get the HelpText Data from DB
@@ -816,8 +872,6 @@ const lendingProduct = React.createClass({
     this.props.getHelpTextOfAllElementsFromDB(JSON.stringify(jsonWithAllElementIds));
 
 
-    //These three are the working things
-
     // this.props.getDataFromDB(AccountingPage, InterestPage, BasicsPage);
 
     this.props.getBasicsDataFromDB(BasicsPage);
@@ -829,27 +883,14 @@ const lendingProduct = React.createClass({
 
     //get exisiting fee set data
     this.props.getExisitingFeeSetsFromDB();
+
+    //get exisiting Protect Type
+    //getProtectTypeFromDB(elementId, isPickList)
+    this.props.getProtectTypeFromDB('loan__Protect_Type__c', true);
   },
 
-  creatOptions(formatTheseOptions, selfVal) {
-    var returnOptionsObj = [];
-    formatTheseOptions.map(function(singleVal){
-
-      returnOptionsObj.push(
-        {
-          value: selfVal.formatString(singleVal),
-          label: singleVal
-        }
-      )
-    });
-    return returnOptionsObj;
-  },
-
-  formatString(stringVal) {
-    stringVal = stringVal.split(' ').join('_');
-    return stringVal;
-  },
-
+  // This is for creating the Bread Crumb that is like showing the status of which pages
+  // data is entered or completed
   createBreadCrumbElements(thisVal) {
     // let finalReturnValue = '<ol class="slds-list--horizontal">';
     // for(let i=0; i<LPFields.default.AllPages.length; i++) {
@@ -872,7 +913,6 @@ const lendingProduct = React.createClass({
     // <button class="slds-button slds-button--neutral">Save</button>
     return finalReturnValue;
   },
-
 
   // Accepts
   //1. type : type of data to be retrieved from Whole JSON
@@ -912,6 +952,7 @@ const lendingProduct = React.createClass({
     return ( finalHtmlViewWithFields );
   },
 
+  // For creating options for Pick List Elements
   createOptionsForPickList(arrayOfOptions) {
     // pickListValues
     let finalOptionsList = "";
@@ -931,6 +972,10 @@ const lendingProduct = React.createClass({
     return finalOptionsList;
   },
 
+  // Creating the Elements - which will in deed call
+  // CreatingStartingElement - For creating starting tag of the element
+  // CreatingEndingElement - For creating ending tag of the element
+
   createTheElement(type, objectData, wholeDatsOfThisType, thisVal) {
     // console.log('objectData', objectData);
 
@@ -944,9 +989,6 @@ const lendingProduct = React.createClass({
     }
     else {
       htmlEndElement = thisVal.createEndingElement(objectData.element);
-
-
-
     }
 
     labelForElement = thisVal.createLabelForConcernedElement(objectData.label, objectData.id, objectData.labelClassName, thisVal, objectData.isRequired);
@@ -979,14 +1021,27 @@ const lendingProduct = React.createClass({
 
         //access data from state
         if(this.state.exisitingfeeSets.existingFeeSets) {
-          // console.log(this.state.exisitingfeeSets.existingFeeSets);
-
-
-
+          console.log(this.state.exisitingfeeSets.existingFeeSets);
           selectForExisitingFeeSetData += thisVal.createOptionsForPickList(this.state.exisitingfeeSets.existingFeeSets);
         }
         selectForExisitingFeeSetData +='</select>';
         $(document).on('click', '#existingFeeSetSelect', this.onClickForFeeSet);
+        // selectForExisitingFeeSetData +='</div>';
+
+        // console.log(selectForExisitingFeeSetData);
+        finalElement += selectForExisitingFeeSetData;
+      }
+
+      else if(objectData.id == "loan__protect_enabled__c") {
+        selectForExisitingFeeSetData = '<select id="loan__Protect_Type__c" name="loan__Protect_Type__c" class="clearBoth displayNone slds-select Width15">';
+
+        //access data from state
+        if(this.state.ProtectType.customFieldDetails) {
+          // console.log(this.state.exisitingfeeSets.existingFeeSets);
+          selectForExisitingFeeSetData += thisVal.createOptionsForPickList(this.state.ProtectType.customFieldDetails.picklist);
+        }
+        selectForExisitingFeeSetData +='</select>';
+        $(document).on('click', '#loan__Protect_Type__c', this.onClickForProtectType);
         // selectForExisitingFeeSetData +='</div>';
 
         // console.log(selectForExisitingFeeSetData);
@@ -1010,10 +1065,10 @@ const lendingProduct = React.createClass({
         let resultVal = thisVal.searchArray(wholeDatsOfThisType, objectData.label, 'label');
 
         // if(objectData.id == "loan__Accrual_Start_Basis__c") {
-        //   console.log('#######################');
+        //
         //   console.log(objectData);
         //   console.log(wholeDatsOfThisType);
-        //   console.log('#######################');
+        //
         // }
 
         // pickListValues = resultVal.picklist;
@@ -1040,6 +1095,7 @@ const lendingProduct = React.createClass({
     return finalElement;
   },
 
+  // Creating the Starting of the element
   createStartingElement(objectData, thisVal, pageType) {
     const spaceVariable = ' ';
     const quotesVariable = '"';
@@ -1095,6 +1151,7 @@ const lendingProduct = React.createClass({
     return finalStartingElementStructure;
   },
 
+  // Creating Ending of the element
   createEndingElement(type) {
 
     let finalEndingElementStructure;
@@ -1102,6 +1159,7 @@ const lendingProduct = React.createClass({
     return finalEndingElementStructure;
   },
 
+  // Creating Label for the concerned Element
   createLabelForConcernedElement(labelValue, labelForId, listOfClasses, thisVal, isRequired) {
     let labelElement;
     //<label for="female">Female</label>
@@ -1120,6 +1178,9 @@ const lendingProduct = React.createClass({
     return labelElement;
   },
 
+  // Elements and their concerned Labels some times have many class names,
+  // this method will loop through those classNames and add them to a string
+  // which will add back to the element start tag
   loopThroughClassNamesAndAddtoString(listOfClassNames) {
     let finalValueToReturn = 'class="';
     listOfClassNames.map(function(individualClassName) {
