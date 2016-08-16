@@ -381,9 +381,9 @@ const lendingProduct = React.createClass({
                           </button>
                           <div className="slds-dropdown slds-dropdown--actions slds-dropdown--left" id="dd0-dd">
                             <ul className="dropdown__list" role="menu">
-                              <li className="slds-dropdown__item" tabIndex="-1" role="menuitem option"><a id="amortizationLP" name="AmortizationLendingProductCmpMainDiv" href="#" onClick={e => this.newLendingProductSelectionEvent(e)} className="slds-truncate" tabIndex="-1">Amortization Lending Product</a></li>
-                              <li className="slds-dropdown__item" tabIndex="-1" role="menuitem option"><a id="lineOfCreditLP" name="LineOfCreditLendingProductCmpMainDiv" href="#" onClick={e => this.newLendingProductSelectionEvent(e)} className="slds-truncate" tabIndex="-1">Line Of Credit Lending Product</a></li>
-                              <li className="slds-dropdown__item" tabIndex="-1" role="menuitem option"><a id="simpleLP" name="SimpleLendingProductCmpMainDiv" href="#" onClick={e => this.newLendingProductSelectionEvent(e)} className="slds-truncate" tabIndex="-1">Simple Lending Product</a></li>
+                              <li className="slds-dropdown__item" tabindex="-1" role="menuitem option"><a id="amortizationLP" name="AmortizationLendingProductCmpMainDiv" href="#" onClick={e => this.newLendingProductSelectionEvent(e)} className="slds-truncate" tabindex="-1">Amortization Lending Product</a></li>
+                              <li className="slds-dropdown__item" tabindex="-1" role="menuitem option"><a id="lineOfCreditLP" name="LineOfCreditLendingProductCmpMainDiv" href="#" onClick={e => this.newLendingProductSelectionEvent(e)} className="slds-truncate" tabindex="-1">Line Of Credit Lending Product</a></li>
+                              <li className="slds-dropdown__item" tabindex="-1" role="menuitem option"><a id="simpleLP" name="SimpleLendingProductCmpMainDiv" href="#" onClick={e => this.newLendingProductSelectionEvent(e)} className="slds-truncate" tabindex="-1">Simple Lending Product</a></li>
                             </ul>
                           </div>
                         </div>
@@ -640,9 +640,9 @@ const lendingProduct = React.createClass({
 
   // On Click event for all Elements - used for handling and swapping HelpText Data
   onClickForAllElements(e) {
-    // console.log(this.state.basicData.basicsData);
-    // console.log(e.target.parentNode.parentNode.childNodes[0].innerHTML);
-    // console.log(e.target.name);
+    console.log(this.state.basicData.basicsData);
+    console.log(e.target.parentNode.parentNode.childNodes[0].innerHTML);
+    console.log(e.target.name);
 
 
     // get the help text from state.existinglendingProducts.HelpTextData and populate it in help text div
@@ -652,7 +652,17 @@ const lendingProduct = React.createClass({
     if(helpTextFound[0].helpText) {
       $('#HelpTextValue').text(helpTextFound[0].helpText);
     }
-    if(e.target.id === "loan__protect_enabled__c") {
+
+    // This is for handling Fee Set Radio button Display Swap
+    if(e.target.id === "existingFeeSetRdbtn") {
+      $('#existingFeeSetSelect').removeClass('displayNone');
+      $('#createNewFeeSetBtn').addClass('displayNone');
+    }
+    else if(e.target.id === "loan__Fee_Set__c") {
+      $('#createNewFeeSetBtn').removeClass('displayNone');
+      $('#existingFeeSetSelect').addClass('displayNone');
+    }
+    else if(e.target.id === "loan__protect_enabled__c") {
       if($('#' + e.target.id).is(':checked')) {
         $('#loan__Protect_Type__c').removeClass('displayNone');
       }
@@ -944,13 +954,6 @@ const lendingProduct = React.createClass({
           "elementId" : simpleLPFields.default[simpleLPFieldsArray[i]][j].id,
           "HelpText" : ""
         });
-
-        if(simpleLPFields.default[simpleLPFieldsArray[i]][j].name) {
-          jsonWithAllElementIds.push({
-            "elementId" : simpleLPFields.default[simpleLPFieldsArray[i]][j].name,
-            "HelpText" : ""
-          });
-        }
       }
     }
     // console.log('FINAL JSON WITH ALL ELEMENT IDS', jsonWithAllElementIds);
@@ -1100,7 +1103,16 @@ const lendingProduct = React.createClass({
       finalElement += "</div>";
     }
     else if(objectData.type === "checkbox" || objectData.type === "radio") {
+      // console.log(objectData.type);
+      // finalElement += "<div class='slds-form-element__control'>";
+      // finalElement += htmlStartElement;
+      // finalElement += htmlEndElement;
       finalElement += "</div>";
+      // finalElement += labelForElement;
+      // console.log(objectData.id);
+      // let createNewFeeSetBtn = "";
+      // let selectForExisitingFeeSetData = "";
+
       if(objectData.dependentElements) {
         for(let dependentElementCount = 0; dependentElementCount < objectData.dependentElements.length; dependentElementCount++) {
           let dependentElement = "";
@@ -1116,8 +1128,78 @@ const lendingProduct = React.createClass({
           finalElement += dependentElement;
         }
       }
+
+      // // if(objectData.id === "loan__Fee_Set__c") {
+      // //   //creating button
+      // //   //this is temp solution
+      // //   createNewFeeSetBtn = "<button id='createNewFeeSetBtn' class='slds-button--neutral slds-button floatLeft marginTop2Percent' name='feeSetUrl' type='button'>Click to Create new Fee Set</button>";
+      // //   // console.log(createNewFeeSetBtn);
+      // //   $(document).on('click', '#createNewFeeSetBtn', this.onClickForFeeSet);
+      // //   finalElement += createNewFeeSetBtn;
+      // // }
+      //
+      //
+      // // else if(objectData.id == "existingFeeSetRdbtn") {
+      // //   //create drop down list with exisiting options
+      // //
+      // //   // selectForExisitingFeeSetData = '<select id="existingFeeSetSelect" name="loan__Fee_Set__c" class="clearBoth displayNone slds-select Width15">';
+      // //   //
+      // //   // //access data from state
+      // //   // if(this.state.exisitingfeeSets.existingFeeSets) {
+      // //   //   console.log(this.state.exisitingfeeSets.existingFeeSets);
+      // //   //   selectForExisitingFeeSetData += thisVal.createOptionsForPickList(this.state.exisitingfeeSets.existingFeeSets);
+      // //   // }
+      // //   // selectForExisitingFeeSetData +='</select>';
+      // //   // $(document).on('click', '#existingFeeSetSelect', this.onClickForFeeSet);
+      // //   // // selectForExisitingFeeSetData +='</div>';
+      // //   //
+      // //   // // console.log(selectForExisitingFeeSetData);
+      // //
+      // //   // createTheElement(type, objectData, wholeDatsOfThisType, thisVal) {
+      // //
+      // //
+      // //   }
+      //
+      //
+      //   // let testThisShit = thisVal.createTheElement(type, objectData.dependentElements[0], this.state.exisitingfeeSets.existingFeeSets, thisVal);
+      //   // console.log('###########################################');
+      //   // console.log(testThisShit);
+      //   // console.log('###########################################');
+      //   // finalElement += testThisShit;
+      //
+      //   // finalElement += selectForExisitingFeeSetData;
+      // }
+      //
+      // // else if(objectData.id == "loan__protect_enabled__c") {
+      // //   selectForExisitingFeeSetData = '<select id="loan__Protect_Type__c" name="loan__Protect_Type__c" class="clearBoth displayNone slds-select Width15">';
+      // //
+      // //   //access data from state
+      // //   if(this.state.ProtectType.customFieldDetails) {
+      // //     // console.log(this.state.exisitingfeeSets.existingFeeSets);
+      // //     selectForExisitingFeeSetData += thisVal.createOptionsForPickList(this.state.ProtectType.customFieldDetails.picklist);
+      // //   }
+      // //   selectForExisitingFeeSetData +='</select>';
+      // //   $(document).on('click', '#loan__Protect_Type__c', this.onClickForProtectType);
+      // //   // selectForExisitingFeeSetData +='</div>';
+      // //
+      // //   // console.log(selectForExisitingFeeSetData);
+      // //   finalElement += selectForExisitingFeeSetData;
+      // // }
     }
     else {
+
+      // if(objectData.type === 'button') {
+      //   finalElement += "<div class='slds-form-element__control'>";
+      //   finalElement += buttonString;
+      // }
+      // else {
+      // if(labelForElement) {
+      //   finalElement += labelForElement;
+      // }
+      // finalElement += "<div class='slds-form-element__control'>";
+      // finalElement += htmlStartElement;
+      // }
+
       if(objectData.element === "select" && wholeDatsOfThisType != undefined && type != "AccountingElements") {
 
         let resultVal;
@@ -1128,6 +1210,14 @@ const lendingProduct = React.createClass({
           resultVal = wholeDatsOfThisType;
         }
 
+        // if(objectData.id == "loan__Accrual_Start_Basis__c") {
+        //
+        //   console.log(objectData);
+        //   console.log(wholeDatsOfThisType);
+        //
+        // }
+
+        // pickListValues = resultVal.picklist;
         let optionsForPickList;
         if(resultVal) {
           if(resultVal.picklist) {
@@ -1143,8 +1233,11 @@ const lendingProduct = React.createClass({
       else if(objectData.element === "select" && wholeDatsOfThisType != undefined && type === "AccountingElements") {
         finalElement += wholeDatsOfThisType;
       }
+      // if(objectData.type !== 'button') {
       finalElement += htmlEndElement;
+      // }
       finalElement += "</div>";
+
     }
 
     finalElement += "</div>";
@@ -1164,10 +1257,26 @@ const lendingProduct = React.createClass({
       finalStartingElementStructure += 'checked=' + quotesVariable + 'checked' + quotesVariable + spaceVariable;
     }
 
+    // if(objectData.dependentElements) {
+    //   objectData.dependentElements.map(function(individualDependentElement) {
+    //     //get data from state
+    //     if(thisVal.state[individualDependentElement.name]) {
+    //       let data = thisVal.state[individualDependentElement.name].feeSetUrl;
+    //       finalStartingElementStructure += thisVal.createTheElement(individualDependentElement.type, individualDependentElement, data, thisVal);
+    //     }
+    //     //
+    //   });
+    // }
 
     finalStartingElementStructure += 'ref=' + quotesVariable + objectData.id + quotesVariable + spaceVariable;
     finalStartingElementStructure += 'name=' + quotesVariable + pageType + quotesVariable + spaceVariable;
     finalStartingElementStructure += 'id=' + quotesVariable + objectData.id + quotesVariable + spaceVariable;
+
+    // onChange={this.handleChange.bind(this, 'input1')}
+
+    // finalStartingElementStructure += 'onChange=' + quotesVariable  + this.onChangeForAllElements +  quotesVariable + spaceVariable;
+
+    // finalStartingElementStructure += 'onChange=' + quotesVariable  + this.props.testActiontoTestRetrievingDataFromSalesForce() +  quotesVariable + spaceVariable;
 
     //using JQuery for on Change event
     if(objectData.handleChangeEvent == false) {
@@ -1178,48 +1287,15 @@ const lendingProduct = React.createClass({
       $(document).on('click', '#'+objectData.id, this.onClickForAllElements);
       $(document).on('focus', '#'+objectData.id, this.onClickForAllElements);
     }
-    if(objectData.handleClickEvent_Separately) {
+    if(objectData.handleChangeEvent_Separately) {
       $('#'+objectData.id).on('click', function(e) {
         console.log(e);
         if(e.target.id === "createNewFeeSetBtn") {
           //this.state.feeSetUrl
           window.open(thisVal.state.feeSetUrl.feeSetUrl);
-          let helpTextFound = this.getElementHelpText("loan__Fee_Set__c", this);
-          if(helpTextFound[0].helpText) {
-            $('#HelpTextValue').text(helpTextFound[0].helpText);
-          }
-        }
-        else if(e.target.id === "newFeeSetRbn") {
-          // This is for handling Fee Set Radio button Display Swap
-          $('#createNewFeeSetBtn').removeClass('displayNone');
-          $('#loan__Fee_Set__c').addClass('displayNone');
-          let helpTextFound = this.getElementHelpText("loan__Fee_Set__c", this);
-          if(helpTextFound[0].helpText) {
-            $('#HelpTextValue').text(helpTextFound[0].helpText);
-          }
-        }
-        else if(e.target.id === "existingFeeSetRdbtn") {
-          $('#loan__Fee_Set__c').removeClass('displayNone');
-          $('#createNewFeeSetBtn').addClass('displayNone');
-          let helpTextFound = this.getElementHelpText("loan__Fee_Set__c", this);
-          if(helpTextFound[0].helpText) {
-            $('#HelpTextValue').text(helpTextFound[0].helpText);
-          }
         }
       }.bind(thisVal));
     }
-
-    // This is for handling Fee Set Radio button Display Swap
-    // if(e.target.id === "existingFeeSetRdbtn") {
-    //   $('#existingFeeSetSelect').removeClass('displayNone');
-    //   $('#createNewFeeSetBtn').addClass('displayNone');
-    // }
-    // else if(e.target.id === "loan__Fee_Set__c") {
-    //   $('#createNewFeeSetBtn').removeClass('displayNone');
-    //   $('#existingFeeSetSelect').addClass('displayNone');
-    // }
-
-
     // onChangeForAllElements
 
 

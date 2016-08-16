@@ -1,4 +1,4 @@
-const LendingProductFields = {
+const SimpleLendingProductFields = {
 
   "InitialState" : {
     "basicData" : {},
@@ -233,7 +233,24 @@ const LendingProductFields = {
       "clearBoth"
     ],
     "isRequired" : false,
-    "selected" : false
+    "selected" : false,
+    "handleChangeEvent" : false,
+    "handleClickEvent_Separately" : true,
+    "dependentElements" : [
+      {
+        "element": "select",
+        "elementClassName": [
+          "slds-select_container",
+          "slds-select",
+          "Width30Imp",
+          "displayNone",
+          "marginTop2Percent"
+        ],
+        "id": "loan__Fee_Set__c",
+        "name": "loan__Fee_Set__c",
+        "isRequired" : false
+      }
+    ]
   },
   {
     "element": "input",
@@ -242,7 +259,7 @@ const LendingProductFields = {
       "slds-radio",
       "marginTop05"
     ],
-    "id": "loan__Fee_Set__c",
+    "id": "newFeeSetRbn",
     "name": "loan__Fee_Set__c",
     "label": "Create New Fee Set",
     "labelClassName" : [
@@ -251,20 +268,24 @@ const LendingProductFields = {
     ],
     "isRequired" : false,
     "selected" : true,
+    "handleChangeEvent" : false,
+    "handleClickEvent_Separately" : true,
     "dependentElements" : [
       {
         "element": "button",
         "type": "button",
         "elementClassName": [
-
+          "slds-button"
         ],
         "id": "createNewFeeSetBtn",
         "name": "feeSetUrl",
-        "label": "Click to Create new Fee Set",
+        "text": "Click to Create new Fee Set",
         "labelClassName" : [
           "slds-form-element__label",
           "clearBoth"
-        ]
+        ],
+        "handleChangeEvent" : false,
+        "handleClickEvent_Separately" : true
       }
     ]
   }
@@ -478,14 +499,13 @@ const LendingProductFields = {
         "element": "select",
         "elementClassName": [
           "slds-select_container",
-          "slds-select"
+          "slds-select",
+          "Width30Imp",
+          "displayNone",
+          "marginTop2Percent"
         ],
         "id": "loan__Protect_Type__c",
-        "label": "Protect Type",
-        "labelClassName" : [
-          "slds-form-element__label",
-          "clearBoth"
-        ],
+        "name": "loan__Protect_Type__c",
         "isRequired" : false
       }
     ]
@@ -753,4 +773,4 @@ const LendingProductFields = {
 ]
 };
 
-export default LendingProductFields;
+export default SimpleLendingProductFields;
