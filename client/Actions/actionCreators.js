@@ -1,6 +1,6 @@
   // Action Creators
 
-import {getData, getBasicsData, getInterestData, getAccountingData, submitLoanData, getFeeSetUrl, getExisitingFeeSets, getHelperTextOfAllFields, getCustomFieldDetails} from '../api/serverCalls';
+import {getData, getBasicsData, getInterestData, getAccountingData, submitLoanData, getFeeSetUrl, getExisitingFeeSets, getHelperTextOfAllFields, getCustomFieldDetails, getExisitingLendingProducts, getBillingData} from '../api/serverCalls';
 
 export function openExistingLendingProduct(LendingProductName, LendingProductId) {
   return {
@@ -89,6 +89,20 @@ export function getProtectTypeFromDB(elementId, isPickList) {
   return {
     type: 'GET_PROTECT_TYPE',
     ExisitingProtectType: getCustomFieldDetails(elementId, isPickList)
+  }
+}
+
+export function getAllExisitingLoanProductsFromDB() {
+  return {
+    type: 'GET_ALL_EXISTING_LOAN_PRODUCTS',
+    SetOfAllExisitingLoanProducts: getExisitingLendingProducts()
+  }
+}
+
+export function getBillingDataFromDB(BillingPageFieldNames) {
+  return {
+    type: 'RETRIEVE_BILLINGPAGE_DATA',
+    jsonValueOfBillingPage: getBillingData(BillingPageFieldNames)
   }
 }
 

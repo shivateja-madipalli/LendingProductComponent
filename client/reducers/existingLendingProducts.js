@@ -10,7 +10,10 @@ const INITIAL_STATE = {
   feeSetUrl: "",
   exisitingfeeSets : {},
   HelpTextData: {},
-  ProtectType: {}
+  ExisitingProtectType: {},
+  SetOfAllExisitingLoanProducts: {},
+  currentLPPage: "",
+  billingData : {}
 };
 
 // const INITIAL_STATE = {
@@ -70,43 +73,52 @@ function existingLendingProducts(state = INITIAL_STATE, action) {
 
     */
 
+
     case "RETRIEVE_BASICSPAGE_DATA":
-    return { ...state, basicData: action.jsonValueOfBasicsPage, interestData: state.interestData, accountingData: state.accountingData, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan,feeSetUrl: state.feeSetUrl, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData, ProtectType: state.ExisitingProtectType};
+    console.log('#$#$$#$#$$', action.jsonValueOfBasicsPage);
+    return { ...state, billingData: state.billingData, basicData: action.jsonValueOfBasicsPage, interestData: state.interestData, accountingData: state.accountingData, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan,feeSetUrl: state.feeSetUrl, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData, ProtectType: state.ExisitingProtectType, SetOfAllExisitingLoanProducts: state.SetOfAllExisitingLoanProducts, currentLPPage: state.currentLPPage};
     // return { ...state, basicData: action.jsonValueOfBasicsPage};
 
+    case "RETRIEVE_BILLINGPAGE_DATA":
+
+    // return { ...state, billingTestData: action.jsonValueOfBillingPage, basicData: state.jsonValueOfBasicsPage, interestData: state.interestData, accountingData: state.accountingData, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan,feeSetUrl: state.feeSetUrl, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData, ProtectType: state.ExisitingProtectType, SetOfAllExisitingLoanProducts: state.SetOfAllExisitingLoanProducts, currentLPPage: state.currentLPPage};
+    return { ...state, billingData: action.jsonValueOfBillingPage, basicData: state.jsonValueOfBasicsPage, interestData: state.interestData, accountingData: state.accountingData, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan,feeSetUrl: state.feeSetUrl, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData, ProtectType: state.ExisitingProtectType, SetOfAllExisitingLoanProducts: state.SetOfAllExisitingLoanProducts, currentLPPage: state.currentLPPage};
 
     case "RETRIEVE_INTERESTPAGE_DATA":
 
-    return { ...state, basicData: state.basicData, interestData: action.jsonValueOfInterestPage, accountingData: state.accountingData, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan,feeSetUrl: state.feeSetUrl, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData, ProtectType: state.ExisitingProtectType};
+    return { ...state, billingData: state.billingData, basicData: state.basicData, interestData: action.jsonValueOfInterestPage, accountingData: state.accountingData, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan,feeSetUrl: state.feeSetUrl, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData, ProtectType: state.ExisitingProtectType, SetOfAllExisitingLoanProducts: state.SetOfAllExisitingLoanProducts, currentLPPage: state.currentLPPage};
     // return { ...state, interestData: action.jsonValueOfInterestPage};
 
     case "RETRIEVE_ACCOUNTINGPAGE_DATA":
 
-    return {...state, basicData: state.basicData, interestData: state.interestData, accountingData: action.jsonValueOfAccountingPage, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan,feeSetUrl: state.feeSetUrl, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData, ProtectType: state.ExisitingProtectType};
+    return {...state, billingData: state.billingData, basicData: state.basicData, interestData: state.interestData, accountingData: action.jsonValueOfAccountingPage, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan,feeSetUrl: state.feeSetUrl, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData, ProtectType: state.ExisitingProtectType, SetOfAllExisitingLoanProducts: state.SetOfAllExisitingLoanProducts, currentLPPage: state.currentLPPage};
     // return {...state,accountingData: action.jsonValueOfAccountingPage};
 
     case "RETRIEVE_FEESET_URL":
 
-    return {...state, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, feeSetUrl: action.feeSetUrl, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData, ProtectType: state.ExisitingProtectType};
+    return {...state, billingData: state.billingData, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, feeSetUrl: action.feeSetUrl, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData, ProtectType: state.ExisitingProtectType, SetOfAllExisitingLoanProducts: state.SetOfAllExisitingLoanProducts, currentLPPage: state.currentLPPage};
     // return {...state, feeSetUrl: action.feeSetUrl};
 
     case "EXISITING_FEESET_DATA":
 
-    return {...state, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, feeSetUrl: state.feeSetUrl, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan, exisitingfeeSets: action.exisitingFeeSetData, HelpTextData: state.HelpTextData, ProtectType: state.ExisitingProtectType};
+    return {...state, billingData: state.billingData, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, feeSetUrl: state.feeSetUrl, currentPage: state.currentPage, confirmationFromSFAfterInsertingLoan : state.confirmationFromSFAfterInsertingLoan, exisitingfeeSets: action.exisitingFeeSetData, HelpTextData: state.HelpTextData, ProtectType: state.ExisitingProtectType, SetOfAllExisitingLoanProducts: state.SetOfAllExisitingLoanProducts, currentLPPage: state.currentLPPage};
     // return {...state, exisitingfeeSets: action.exisitingFeeSetData};
 
     case "SUBMIT_FORM":
 
-    return {...state, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, confirmationFromSFAfterInsertingLoan : action.allDataInsertedConfirmation, feeSetUrl: state.feeSetUrl, currentPage: state.currentPage, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData, ProtectType: state.ExisitingProtectType};
+    return {...state, billingData: state.billingData, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, confirmationFromSFAfterInsertingLoan : action.allDataInsertedConfirmation, feeSetUrl: state.feeSetUrl, currentPage: state.currentPage, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData, ProtectType: state.ExisitingProtectType, SetOfAllExisitingLoanProducts: state.SetOfAllExisitingLoanProducts, currentLPPage: state.currentLPPage};
     // return {...state, confirmationFromSFAfterInsertingLoan : action.allDataInsertedConfirmation};
 
     case "GET_HELP_TEXT":
 
-    return {...state, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, confirmationFromSFAfterInsertingLoan : state.allDataInsertedConfirmation, feeSetUrl: state.feeSetUrl, currentPage: state.currentPage, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: action.HelpTextData, ProtectType: state.ExisitingProtectType};
+    return {...state, billingData: state.billingData, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, confirmationFromSFAfterInsertingLoan : state.allDataInsertedConfirmation, feeSetUrl: state.feeSetUrl, currentPage: state.currentPage, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: action.HelpTextData, ProtectType: state.ExisitingProtectType, SetOfAllExisitingLoanProducts: state.SetOfAllExisitingLoanProducts, currentLPPage: state.currentLPPage};
     // return {...state, HelpTextData: action.HelpTextData};
 
     case "GET_PROTECT_TYPE":
-    return {...state, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, confirmationFromSFAfterInsertingLoan : state.allDataInsertedConfirmation, feeSetUrl: state.feeSetUrl, currentPage: state.currentPage, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData, ProtectType: action.ExisitingProtectType};
+    return {...state, billingData: state.billingData, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, confirmationFromSFAfterInsertingLoan : state.allDataInsertedConfirmation, feeSetUrl: state.feeSetUrl, currentPage: state.currentPage, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData, ProtectType: action.ExisitingProtectType, SetOfAllExisitingLoanProducts: state.SetOfAllExisitingLoanProducts, currentLPPage: state.currentLPPage};
+
+    case "GET_ALL_EXISTING_LOAN_PRODUCTS":
+    return {...state, billingData: state.billingData, basicData: state.basicData, interestData: state.interestData, accountingData: state.accountingData, allEnterData: state.allEnterData, isLoading: state.isLoading, reRenderElements: state.reRenderElements, confirmationFromSFAfterInsertingLoan : state.allDataInsertedConfirmation, feeSetUrl: state.feeSetUrl, currentPage: state.currentPage, exisitingfeeSets: state.exisitingfeeSets, HelpTextData: state.HelpTextData, ProtectType: state.ExisitingProtectType, SetOfAllExisitingLoanProducts: action.SetOfAllExisitingLoanProducts, currentLPPage: state.currentLPPage};
 
     default:
     return state;

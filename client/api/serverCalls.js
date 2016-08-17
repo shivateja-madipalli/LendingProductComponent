@@ -27,6 +27,32 @@ export function getData(AccountingPage, InterestPage, BasicsPage) {
   });
 }
 
+export function getExisitingLendingProducts() {
+  return new Promise((resolve, reject) => {
+    try {
+      CL_SimpleLoanProduct_Controller.getAllLoanProducts(function(Result, event){
+        if (event.status)
+        {
+          console.log('Result=',Result);
+
+          if(Result!= '')
+          {
+            // console.log('INFORMATION=',Result);
+          }
+          else
+          {
+            // console.log('PROBLEM WITH INFORMATION=',Result);
+          }
+        }
+        return resolve({existingLoanProducts: Result});
+      }, {escape:true});
+    }
+    catch(ex) {
+      console.log('Exception', ex);
+    }
+  });
+}
+
 export function getHelperTextOfAllFields(listOfAllElementIds) {
   return new Promise((resolve, reject) => {
     try {
@@ -45,6 +71,32 @@ export function getHelperTextOfAllFields(listOfAllElementIds) {
           }
         }
         return resolve({helpTextWithElementId: Result});
+      }, {escape:true});
+    }
+    catch(ex) {
+      console.log('Exception', ex);
+    }
+  });
+}
+
+export function getBillingData(BillingPage) {
+  return new Promise((resolve, reject) => {
+    try {
+      CL_SimpleLoanProduct_Controller.getBillingData(BillingPage, function(Result, event){
+        if (event.status)
+        {
+          console.log('BILLING Result=',Result);
+
+          if(Result!= '')
+          {
+            // console.log('INFORMATION=',Result);
+          }
+          else
+          {
+            // console.log('PROBLEM WITH INFORMATION=',Result);
+          }
+        }
+        return resolve({billingData: Result});
       }, {escape:true});
     }
     catch(ex) {

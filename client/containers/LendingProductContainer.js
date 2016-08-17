@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import lendingProduct from '../components/lendingProduct';
-import {testActiontoTestRetrievingDataFromSalesForce, getDataFromDB, getBasicsDataFromDB, getInterestDataFromDB, getAccountingDataFromDB, submitForm, getFeeSetUrlFromDB, getExisitingFeeSetsFromDB, getHelpTextOfAllElementsFromDB, getProtectTypeFromDB} from '../actions/actionCreators';
+import {testActiontoTestRetrievingDataFromSalesForce, getDataFromDB, getBasicsDataFromDB, getInterestDataFromDB, getAccountingDataFromDB, submitForm, getFeeSetUrlFromDB, getExisitingFeeSetsFromDB, getHelpTextOfAllElementsFromDB, getProtectTypeFromDB, getAllExisitingLoanProductsFromDB, getBillingDataFromDB} from '../actions/actionCreators';
 
 
 // mapStateToProps is called when ever the state is changed
@@ -36,6 +36,9 @@ function mapStateToProps(globalState) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+     getBillingDataFromDB: (BillingData) => {
+       dispatch(getBillingDataFromDB(BillingData))
+    },
   	 getBasicsDataFromDB: (BasicsPage) => {
     	dispatch(getBasicsDataFromDB(BasicsPage))
     },
@@ -70,6 +73,10 @@ const mapDispatchToProps = (dispatch) => {
 
    getProtectTypeFromDB: (elementId, isPickList) => {
      dispatch(getProtectTypeFromDB(elementId, isPickList))
+   },
+
+   getAllExisitingLoanProductsFromDB: () => {
+     dispatch(getAllExisitingLoanProductsFromDB())
    }
 
   }

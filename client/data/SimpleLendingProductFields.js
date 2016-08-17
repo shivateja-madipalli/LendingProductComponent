@@ -9,35 +9,35 @@ const SimpleLendingProductFields = {
       "allData": {},
       "completed":
       [{
-        "name":"ProfileElements",
+        "name":"ProfileElements_SimpleLP",
         "value" : false
       },
   		{
-        "name": "FeesElements",
+        "name": "FeesElements_SimpleLP",
         "value": false
       },
       {
-        "name":"TermElements",
+        "name":"TermElements_SimpleLP",
         "value": false
       },
       {
-        "name":"InterestElements",
+        "name":"InterestElements_SimpleLP",
         "value": false
       },
       {
-        "name":"ProtectElements",
+        "name":"ProtectElements_SimpleLP",
         "value": false
       },
       {
-        "name":"FundingElements",
+        "name":"FundingElements_SimpleLP",
         "value": false
       },
       {
-        "name":"TolerenceElements",
+        "name":"TolerenceElements_SimpleLP",
         "value": false
       },
       {
-        "name":"AccountingElements",
+        "name":"AccountingElements_SimpleLP",
         "value": false
       }]
     },
@@ -77,18 +77,18 @@ const SimpleLendingProductFields = {
   },
 
   "AllPages": [
-		"ProfileElements",
-		"FeesElements",
-    "TermElements",
-    "InterestElements",
-    "ProtectElements",
-    "FundingElements",
-    "TolerenceElements",
-    "AccountingElements"
+		"ProfileElements_SimpleLP",
+		"FeesElements_SimpleLP",
+    "TermElements_SimpleLP",
+    "InterestElements_SimpleLP",
+    "ProtectElements_SimpleLP",
+    "FundingElements_SimpleLP",
+    "TolerenceElements_SimpleLP",
+    "AccountingElements_SimpleLP"
 	],
 
 
-"ProfileElements": [
+"ProfileElements_SimpleLP": [
   {
     "element": "input",
     "type": "text",
@@ -96,6 +96,7 @@ const SimpleLendingProductFields = {
       "slds-input"
     ],
     "id": "Name",
+    "name": "ProfileElements_SimpleLP",
     "label": "Loan Product Name",
     "labelClassName" : [
       "slds-form-element__label",
@@ -110,6 +111,7 @@ const SimpleLendingProductFields = {
       "slds-select"
     ],
     "id": "loan__Interest_Calculation_Method__c",
+    "name": "ProfileElements_SimpleLP",
     "label": "Billing Method",
     "labelClassName" : [
       "slds-form-element__label",
@@ -125,6 +127,7 @@ const SimpleLendingProductFields = {
       "slds-select"
     ],
     "id": "loan__Frequency_of_Loan_Payment__c",
+    "name": "ProfileElements_SimpleLP",
     "label": "Payment Frequency",
     "labelClassName" : [
       "slds-form-element__label",
@@ -138,6 +141,7 @@ const SimpleLendingProductFields = {
       "slds-select"
     ],
     "id": "loan__Time_Counting_Method__c",
+    "name": "ProfileElements_SimpleLP",
     "label": "Time Counting Method",
     "labelClassName" : [
       "slds-form-element__label",
@@ -152,6 +156,7 @@ const SimpleLendingProductFields = {
       "slds-select"
     ],
     "id": "loan__Accrual_Start_Basis__c",
+    "name": "ProfileElements_SimpleLP",
     "label": "Accural Start Basis",
     "labelClassName" : [
       "slds-form-element__label",
@@ -166,6 +171,7 @@ const SimpleLendingProductFields = {
       "slds-select"
     ],
     "id": "loan__Payment_Application_Mode__c",
+    "name": "ProfileElements_SimpleLP",
     "label": "Payment Application Mode",
     "labelClassName" : [
       "slds-form-element__label",
@@ -180,6 +186,7 @@ const SimpleLendingProductFields = {
       "slds-input"
     ],
     "id": "loan__Interest_Only_Period__c",
+    "name": "ProfileElements_SimpleLP",
     "label": "Interest Only Period",
     "labelClassName" : [
       "slds-form-element__label",
@@ -195,6 +202,7 @@ const SimpleLendingProductFields = {
       "marginTop09"
     ],
     "id": "loan__Actual_Interest_Only_Payments__c",
+    "name": "ProfileElements_SimpleLP",
     "label": "Actual Interest Only Payments",
     "labelClassName" : [
       "slds-form-element__label",
@@ -209,6 +217,7 @@ const SimpleLendingProductFields = {
       "slds-input"
     ],
     "id": "loan__Pre_Bill_Days__c",
+    "name": "ProfileElements_SimpleLP",
     "label": "Pre Bill Days",
     "labelClassName" : [
       "slds-form-element__label",
@@ -217,7 +226,7 @@ const SimpleLendingProductFields = {
     "isRequired" : false
   }
 ],
-"FeesElements" : [
+"FeesElements_SimpleLP" : [
   {
     "element": "input",
     "type": "radio",
@@ -226,7 +235,7 @@ const SimpleLendingProductFields = {
       "marginTop05"
     ],
     "id": "existingFeeSetRdbtn",
-    "name": "loan__Fee_Set__c",
+    "name": "FeesElements_SimpleLP",
     "label": "Choose Existing Fee Set",
     "labelClassName" : [
       "slds-form-element__label",
@@ -247,7 +256,7 @@ const SimpleLendingProductFields = {
           "marginTop2Percent"
         ],
         "id": "loan__Fee_Set__c",
-        "name": "loan__Fee_Set__c",
+        "name": "FeesElements_SimpleLP",
         "isRequired" : false
       }
     ]
@@ -260,7 +269,7 @@ const SimpleLendingProductFields = {
       "marginTop05"
     ],
     "id": "newFeeSetRbn",
-    "name": "loan__Fee_Set__c",
+    "name": "FeesElements_SimpleLP",
     "label": "Create New Fee Set",
     "labelClassName" : [
       "slds-form-element__label",
@@ -278,7 +287,7 @@ const SimpleLendingProductFields = {
           "slds-button"
         ],
         "id": "createNewFeeSetBtn",
-        "name": "feeSetUrl",
+        "name": "FeesElements_SimpleLP",
         "text": "Click to Create new Fee Set",
         "labelClassName" : [
           "slds-form-element__label",
@@ -291,7 +300,7 @@ const SimpleLendingProductFields = {
   }
 ],
 
-"TermElements" : [
+"TermElements_SimpleLP" : [
   {
     "element": "input",
     "type": "text",
@@ -299,6 +308,7 @@ const SimpleLendingProductFields = {
       "slds-input"
     ],
     "id": "loan__Min_Number_of_Installments__c",
+    "name": "TermElements_SimpleLP",
     "label": "Min Term",
     "labelClassName" : [
       "slds-form-element__label",
@@ -325,6 +335,7 @@ const SimpleLendingProductFields = {
       "slds-input"
     ],
     "id": "loan__Max_Number_of_Installments__c",
+    "name": "TermElements_SimpleLP",
     "label": "Max Term",
     "labelClassName" : [
       "slds-form-element__label",
@@ -351,6 +362,7 @@ const SimpleLendingProductFields = {
       "slds-input"
     ],
     "id": "loan__Default_Number_of_Installments__c",
+    "name": "TermElements_SimpleLP",
     "label": "Default Term",
     "labelClassName" : [
       "slds-form-element__label",
@@ -377,6 +389,7 @@ const SimpleLendingProductFields = {
       "slds-input"
     ],
     "id": "loan__Amortization_Term__c",
+    "name": "TermElements_SimpleLP",
     "label": "Amortization Term",
     "labelClassName" : [
       "slds-form-element__label",
@@ -385,7 +398,7 @@ const SimpleLendingProductFields = {
     "isRequired" : true
   }
 ],
-"InterestElements" : [
+"InterestElements_SimpleLP" : [
   {
     "element": "select",
     "elementClassName": [
@@ -393,6 +406,7 @@ const SimpleLendingProductFields = {
       "slds-select"
     ],
     "id": "loan__Interest_Rate_Type__c",
+    "name": "InterestElements_SimpleLP",
     "label": "Interest Type",
     "labelClassName" : [
       "slds-form-element__label",
@@ -407,6 +421,7 @@ const SimpleLendingProductFields = {
       "slds-input"
     ],
     "id": "loan__Min_Interest_Rate__c",
+    "name": "InterestElements_SimpleLP",
     "label": "Min Interest Rate",
     "labelClassName" : [
       "slds-form-element__label",
@@ -433,6 +448,7 @@ const SimpleLendingProductFields = {
       "slds-input"
     ],
     "id": "loan__Max_Interest_Rate__c",
+    "name": "InterestElements_SimpleLP",
     "label": "Max Interest Rate",
     "labelClassName" : [
       "slds-form-element__label",
@@ -459,6 +475,7 @@ const SimpleLendingProductFields = {
       "slds-input"
     ],
     "id": "loan__Default_Interest_Rate__c",
+    "name": "InterestElements_SimpleLP",
     "label": "Default Interest Rate",
     "labelClassName" : [
       "slds-form-element__label",
@@ -479,7 +496,7 @@ const SimpleLendingProductFields = {
     ]
   }
 ],
-"ProtectElements" : [
+"ProtectElements_SimpleLP" : [
   {
     "element": "input",
     "type": "checkbox",
@@ -488,6 +505,7 @@ const SimpleLendingProductFields = {
       "marginTop09"
     ],
     "id": "loan__protect_enabled__c",
+    "name": "ProtectElements_SimpleLP",
     "label": "Protect Enabled",
     "labelClassName" : [
       "slds-form-element__label",
@@ -505,13 +523,13 @@ const SimpleLendingProductFields = {
           "marginTop2Percent"
         ],
         "id": "loan__Protect_Type__c",
-        "name": "loan__Protect_Type__c",
+        "name": "ProtectElements_SimpleLP",
         "isRequired" : false
       }
     ]
   }
 ],
-"FundingElements" : [
+"FundingElements_SimpleLP" : [
   {
     "element": "input",
     "type": "checkbox",
@@ -520,6 +538,7 @@ const SimpleLendingProductFields = {
       "marginTop09"
     ],
     "id": "loan__Funding_in_Tranches__c",
+    "name": "FundingElements_SimpleLP",
     "label": "Funding in Tranches",
     "labelClassName" : [
       "slds-form-element__label",
@@ -534,6 +553,7 @@ const SimpleLendingProductFields = {
       "slds-input"
     ],
     "id": "loan__Min_Loan_Amount__c",
+    "name": "FundingElements_SimpleLP",
     "label": "Min Financed Amount",
     "labelClassName" : [
       "slds-form-element__label",
@@ -555,6 +575,7 @@ const SimpleLendingProductFields = {
       "slds-input"
     ],
     "id": "loan__Max_Loan_Amount__c",
+    "name": "FundingElements_SimpleLP",
     "label": "Max Financed Amount",
     "labelClassName" : [
       "slds-form-element__label",
@@ -570,7 +591,7 @@ const SimpleLendingProductFields = {
     ]
   }
 ],
-"TolerenceElements" : [
+"TolerenceElements_SimpleLP" : [
   {
     "element": "input",
     "type": "text",
@@ -578,6 +599,7 @@ const SimpleLendingProductFields = {
       "slds-input"
     ],
     "id": "loan__Late_Charge_Grace_Days__c",
+    "name": "TolerenceElements_SimpleLP",
     "label": "Late Charge Grace Days",
     "labelClassName" : [
       "slds-form-element__label",
@@ -592,6 +614,7 @@ const SimpleLendingProductFields = {
       "slds-input"
     ],
     "id": "loan__Delinquency_Grace_Days__c",
+    "name": "TolerenceElements_SimpleLP",
     "label": "Delinquency Grace Days",
     "labelClassName" : [
       "slds-form-element__label",
@@ -606,6 +629,7 @@ const SimpleLendingProductFields = {
       "slds-input"
     ],
     "id": "loan__Write_off_Tolerance_Amount__c",
+    "name": "TolerenceElements_SimpleLP",
     "label": "Write Off Tolerance Amount",
     "labelClassName" : [
       "slds-form-element__label",
@@ -615,7 +639,7 @@ const SimpleLendingProductFields = {
   }
 ],
 
-"AccountingElements" : [
+"AccountingElements_SimpleLP" : [
   {
     "element": "select",
     "elementClassName": [
@@ -623,6 +647,7 @@ const SimpleLendingProductFields = {
       "slds-select"
     ],
     "id": "loan__Product_Asset_Account__c",
+    "name": "AccountingElements_SimpleLP",
     "label": "Product Asset Account",
     "labelClassName" : [
       "slds-form-element__label",
@@ -637,6 +662,7 @@ const SimpleLendingProductFields = {
       "slds-select"
     ],
     "id": "loan__Product_Loan_Control_Account__c",
+    "name": "AccountingElements_SimpleLP",
     "label": "Product Loan Control Account",
     "labelClassName" : [
       "slds-form-element__label",
@@ -651,6 +677,7 @@ const SimpleLendingProductFields = {
       "slds-select"
     ],
     "id": "loan__Product_Interest_Income_Account__c",
+    "name": "AccountingElements_SimpleLP",
     "label": "Product Interest Income Account",
     "labelClassName" : [
       "slds-form-element__label",
@@ -665,6 +692,7 @@ const SimpleLendingProductFields = {
       "slds-select"
     ],
     "id": "loan__Product_Interest_Amortization_Account__c",
+    "name": "AccountingElements_SimpleLP",
     "label": "Product Interest Receivable Account",
     "labelClassName" : [
       "slds-form-element__label",
@@ -679,6 +707,7 @@ const SimpleLendingProductFields = {
       "slds-select"
     ],
     "id": "loan__Product_Loan_Loss_Provision_Account__c",
+    "name": "AccountingElements_SimpleLP",
     "label": "Product Loan Loss Provision Account",
     "labelClassName" : [
       "slds-form-element__label",
@@ -693,6 +722,7 @@ const SimpleLendingProductFields = {
       "slds-select"
     ],
     "id": "loan__Product_Loan_Loss_Reserve_Account__c",
+    "name": "AccountingElements_SimpleLP",
     "label": "Product Loan Loss Reserve Account",
     "labelClassName" : [
       "slds-form-element__label",
@@ -707,6 +737,7 @@ const SimpleLendingProductFields = {
       "slds-select"
     ],
     "id": "loan__Product_Loan_Purchase_Payable_Account__c",
+    "name": "AccountingElements_SimpleLP",
     "label": "Product Loan Purchase Payable Account",
     "labelClassName" : [
       "slds-form-element__label",
@@ -721,6 +752,7 @@ const SimpleLendingProductFields = {
       "slds-select"
     ],
     "id": "loan__Product_Loan_Purchase_Receivable_Account__c",
+    "name": "AccountingElements_SimpleLP",
     "label": "Product Loan Purchase Receivable Account",
     "labelClassName" : [
       "slds-form-element__label",
@@ -735,6 +767,7 @@ const SimpleLendingProductFields = {
       "slds-select"
     ],
     "id": "loan__Product_Service_Fee_Income_Account__c",
+    "name": "AccountingElements_SimpleLP",
     "label": "Product Service Fee Income Account",
     "labelClassName" : [
       "slds-form-element__label",
@@ -749,6 +782,7 @@ const SimpleLendingProductFields = {
       "slds-select"
     ],
     "id": "loan__Product_Excess_Account__c",
+    "name": "AccountingElements_SimpleLP",
     "label": "Product Excess Account",
     "labelClassName" : [
       "slds-form-element__label",
@@ -763,6 +797,7 @@ const SimpleLendingProductFields = {
       "slds-select"
     ],
     "id": "loan__Product_Write_Off_Recovery_Account__c",
+    "name": "AccountingElements_SimpleLP",
     "label": "Product Write-Off Recovery Account",
     "labelClassName" : [
       "slds-form-element__label",
