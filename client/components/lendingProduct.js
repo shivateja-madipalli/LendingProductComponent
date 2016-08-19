@@ -6,6 +6,7 @@ let simpleLPFields = require('../data/SimpleLendingProductFields');
 
 let lineOfCreditLPFields = require('../data/LineOfCreditLendingProductFields');
 
+
 //importing commonStyles
 // let commonCss = require('../styles/commonCss.js');
 
@@ -288,6 +289,7 @@ const lendingProduct = React.createClass({
 
     // Exisiting ProtectType Data
     if(NextProps.existinglendingProducts.ProtectType) {
+      console.log('*************',NextProps.existinglendingProducts.ProtectType);
       NextProps.existinglendingProducts.ProtectType.then(function(data) {
         console.log('Exisiting PROTECT TYPE FROM CMP PROPS', data);
         this.setState({
@@ -365,6 +367,7 @@ const lendingProduct = React.createClass({
   },
 
   render() {
+
     console.log('RENDERING!');
     // THIRD
     let self = this;
@@ -376,7 +379,7 @@ const lendingProduct = React.createClass({
 
       /*
       Whats happening here?
-      getTemplateStructure is a method which accepts
+      getTemplateStructure is a method  which accepts
       1. which type of data to be retrieved from JSON object
       2. the data retrieved from SF
       3. this value
@@ -397,9 +400,10 @@ const lendingProduct = React.createClass({
       let lineOfCreditAdvancedElementsHtmlContent = this.getTemplateStructure('AdvanceElements_LineOfCreditLP',undefined, lineOfCreditLPFields, this);
       // let lineOfCreditFeesElementsHtmlContent = this.getTemplateStructure('FeesElements', this.state.interestData.interestData, lineOfCreditLPFields, this);
       // Fees is common
+      let lineOfCreditFeesElementsHtmlContent = this.getTemplateStructure('FeesElements_LineOfCreditLP', undefined, lineOfCreditLPFields, this);
       let lineOfCreditTermElementsHtmlContent = this.getTemplateStructure('TermElements_LineOfCreditLP', undefined, lineOfCreditLPFields, this);
       let lineOfCreditInterestElementsHtmlContent = this.getTemplateStructure('InterestElements_LineOfCreditLP', undefined, lineOfCreditLPFields, this);
-      // let tolerenceElementsHtmlContent = this.getTemplateStructure('TolerenceElements', undefined, lineOfCreditLPFields, this);
+      let lineOfCreditTolerenceElementsHtmlContent = this.getTemplateStructure('TolerenceElements_LineOfCreditLP', undefined, lineOfCreditLPFields, this);
       // Tolerence is common
 
       // create Simple Lending Product Elements
@@ -410,10 +414,12 @@ const lendingProduct = React.createClass({
       let simpleInterestElementsHtmlContent = this.getTemplateStructure('InterestElements_SimpleLP', this.state.interestData.interestData, simpleLPFields, this);
       let simpleProtectElementsHtmlContent = this.getTemplateStructure('ProtectElements_SimpleLP', undefined, simpleLPFields, this);
       let simpleFundingElementsHtmlContent = this.getTemplateStructure('FundingElements_SimpleLP', undefined, simpleLPFields, this);
+      let simpleFeesElementsHtmlContent = this.getTemplateStructure('FeesElements_SimpleLP', undefined, simpleLPFields, this);
+      let simpleTolerenceElementsHtmlContent = this.getTemplateStructure('TolerenceElements_SimpleLP', undefined, simpleLPFields, this);
 
       //common elements between Simple Lending and Line of Credit
-      let commonFeesElementsHtmlContent = this.getTemplateStructure('FeesElements_SimpleLP', undefined, simpleLPFields, this);
-      let commonTolerenceElementsHtmlContent = this.getTemplateStructure('TolerenceElements_SimpleLP', undefined, simpleLPFields, this);
+      // let commonFeesElementsHtmlContent = this.getTemplateStructure('FeesElements_Common', undefined, simpleLPFields, this);
+      // let commonTolerenceElementsHtmlContent = this.getTemplateStructure('TolerenceElements_Common', undefined, simpleLPFields, this);
       // let accountingElementsHtmlContent = this.getTemplateStructure('AccountingElements', undefined, this);
 
       //create Common Options For AccountingElements
@@ -440,8 +446,11 @@ const lendingProduct = React.createClass({
         });
       }
 
-      let commonAccountingElementsHtmlContent = this.getTemplateStructure('AccountingElements_SimpleLP', finalAccountingElementsOptionsList, simpleLPFields, this);
+      // let commonAccountingElementsHtmlContent = this.getTemplateStructure('AccountingElements_Common', finalAccountingElementsOptionsList, simpleLPFields, this);
 
+      console.log('!@@@@@!@!@!@!@!@@!@@!@@!@@!@', finalAccountingElementsOptionsList);
+      let simpleAccountingElementsHtmlContent = this.getTemplateStructure('AccountingElements_SimpleLP', finalAccountingElementsOptionsList, simpleLPFields, this);
+      let lineOfCreditAccountingElementsHtmlContent = this.getTemplateStructure('AccountingElements_LineOfCreditLP', finalAccountingElementsOptionsList, lineOfCreditLPFields, this);
       /*
       <li dangerouslySetInnerHTML={{__html: profileElementsHtmlContent}}>
       'dangerouslySetInnerHTML' is a type where we can insert HTML DATA on need.
@@ -508,15 +517,15 @@ const lendingProduct = React.createClass({
                         </div>
                         <div id='AdvanceElements_LineOfCreditLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone"  dangerouslySetInnerHTML={{__html: lineOfCreditAdvancedElementsHtmlContent}}>
                         </div>
-                        <div id='FeesElements_LineOfCreditLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: commonFeesElementsHtmlContent}}>
+                        <div id='FeesElements_LineOfCreditLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: lineOfCreditFeesElementsHtmlContent}}>
                         </div>
                         <div  id='TermElements_LineOfCreditLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: lineOfCreditTermElementsHtmlContent}}>
                         </div>
                         <div id='InterestElements_LineOfCreditLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone"  dangerouslySetInnerHTML={{__html: lineOfCreditInterestElementsHtmlContent}}>
                         </div>
-                        <div id='TolerenceElements_LineOfCreditLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: commonTolerenceElementsHtmlContent}}>
+                        <div id='TolerenceElements_LineOfCreditLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: lineOfCreditTolerenceElementsHtmlContent}}>
                         </div>
-                        <div id='AccountingElements_LineOfCreditLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: commonAccountingElementsHtmlContent}}>
+                        <div id='AccountingElements_LineOfCreditLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: lineOfCreditAccountingElementsHtmlContent}}>
                         </div>
                       </div>
                     </div>
@@ -539,13 +548,12 @@ const lendingProduct = React.createClass({
                       <p className="slds-text-heading--medium slds-truncate" id="creatingNewLendingProductHeading_" title="Exisiting Lending Product"></p>
                     </div>
                     <div id="InnerleftDiv_BOTTOM" className="">
-
                       <div id="newSimpleLendingProduct">
                         <div dangerouslySetInnerHTML={{__html: simpleBreadCrumbNavContent}}>
                         </div>
                         <div id='ProfileElements_SimpleLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: simpleProfileElementsHtmlContent}}>
                         </div>
-                        <div id='FeesElements_SimpleLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: commonFeesElementsHtmlContent}}>
+                        <div id='FeesElements_SimpleLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: simpleFeesElementsHtmlContent}}>
                         </div>
                         <div id='TermElements_SimpleLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone"  dangerouslySetInnerHTML={{__html: simpleTermElementsHtmlContent}}>
                         </div>
@@ -555,9 +563,9 @@ const lendingProduct = React.createClass({
                         </div>
                         <div id='FundingElements_SimpleLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone"  dangerouslySetInnerHTML={{__html: simpleFundingElementsHtmlContent}}>
                         </div>
-                        <div id='TolerenceElements_SimpleLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: commonTolerenceElementsHtmlContent}}>
+                        <div id='TolerenceElements_SimpleLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: simpleTolerenceElementsHtmlContent}}>
                         </div>
-                        <div id='AccountingElements_SimpleLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: commonAccountingElementsHtmlContent}}>
+                        <div id='AccountingElements_SimpleLP_MainDiv' className="slds-form--horizontal marginTop2Percent displayNone" dangerouslySetInnerHTML={{__html: simpleAccountingElementsHtmlContent}}>
                         </div>
                       </div>
                     </div>
@@ -592,7 +600,7 @@ const lendingProduct = React.createClass({
       )
     }
     else {
-      // console.log('existinglendingProducts.basicData EMPTY', existinglendingProducts.basicData);
+      console.log('existinglendingProducts.basicData EMPTY', existinglendingProducts.basicData);
       return (
         <div>
           <p>LOADING! </p>
@@ -600,6 +608,8 @@ const lendingProduct = React.createClass({
       )
     }
   },
+
+
 
   createExisitingLoanProductsTable() {
     // <tr className="slds-hint-parent">
@@ -637,9 +647,17 @@ const lendingProduct = React.createClass({
 
     //toggle Display between New LP Creation Divs
     if(e.target.id === "amortizationLP") {
-      $('#' + e.target.name).removeClass('displayNone');
+
+      console.log('TRIGGED', e.target.name);
+      $('#exisitingLendingProductsTable').addClass('displayNone');
+
+      $('#SimpleLendingProductCmpMainDiv').removeClass('displayNone');
       $('#LineOfCreditLendingProductCmpMainDiv').addClass('displayNone');
-      $('#SimpleLendingProductCmpMainDiv').addClass('displayNone');
+      console.log('TRIGGED END');
+      let heading = e.target.name.replace("CmpMainDiv","");
+
+      $('#creatingNewLendingProductHeading_').text(heading);
+
     }
     else if(e.target.id === "lineOfCreditLP") {
       $('#exisitingLendingProductsTable').addClass('displayNone');
@@ -661,8 +679,6 @@ const lendingProduct = React.createClass({
 
       $('#creatingNewLendingProductHeading_').text(heading);
     }
-
-
 
     this.setState({
       billingData : this.state.billingData,
@@ -706,7 +722,7 @@ const lendingProduct = React.createClass({
       //check for validations
 
 
-      console.log(e.target.id);
+      // console.log(e.target.id);
       // console.log('ENTERED KNOWN TERRITORY');
       if(e.target.type === "checkbox") {
         jsonVal.allData[e.target.id] = $("#" + e.target.id).is(':checked');
@@ -863,8 +879,6 @@ const lendingProduct = React.createClass({
     if(thisVal.state.currentPage !== "") {
       let currentLPTypeForData = {};
 
-
-
       if(this.state.currentLPType === "simpleLP") {
         currentLPTypeForData = simpleLPFields;
       }
@@ -874,8 +888,8 @@ const lendingProduct = React.createClass({
       else if(this.state.currentLPType === "") {
 
       }
-      console.log('``````````````', currentLPTypeForData);
-      console.log('``````````````', thisVal.state.currentPage);
+      // console.log('``````````````', currentLPTypeForData);
+      // console.log('``````````````', thisVal.state.currentPage);
       //clearing error messages if any
       $('#divForErrorMessages').addClass('displayNone');
       $('#showErrorMessage').text('');
@@ -888,7 +902,7 @@ const lendingProduct = React.createClass({
         let individualElement = currentLPTypeForData.default[thisVal.state.currentPage][i];
         if(individualElement.isRequired) {
           // arrayToCheckWhetherAreThereAnyisRequiredElements.push(true);
-          console.log('!!!!!!!!!!!!!!!',thisVal.state.allEnterData);
+          // console.log('!!!!!!!!!!!!!!!',thisVal.state.allEnterData);
           if(thisVal.state.allEnterData.allData.hasOwnProperty(individualElement.id)) {
             checkWhetherAllIsRequiredElementsAreAnswered = true;
             checkWhetherIsRequiredElementIsInvoked = true;
@@ -919,7 +933,7 @@ const lendingProduct = React.createClass({
 
         //check for validations
 
-        console.log('@@@@@@@@@@@@@', currentLPTypeForData.default[thisVal.state.currentPage]);
+        // console.log('@@@@@@@@@@@@@', currentLPTypeForData.default[thisVal.state.currentPage]);
         loop1:
         for(let i=0; i<currentLPTypeForData.default[thisVal.state.currentPage].length; i++) {
           let individualElementOfThisPage = currentLPTypeForData.default[thisVal.state.currentPage][i];
@@ -1006,7 +1020,7 @@ const lendingProduct = React.createClass({
           $('#showErrorMessage').text(null);
           // $('#' + individualElementOfThisPage.id).removeClass('errorElement');
           let currentPageIndex = currentLPTypeForData.default.AllPages.indexOf(thisVal.state.currentPage);
-          console.log('#############', currentPageIndex);
+          // console.log('#############', currentPageIndex);
           if(currentPageIndex === 0) {
             $('#navigationBackBtn').removeClass('displayNone');
           }
@@ -1014,8 +1028,8 @@ const lendingProduct = React.createClass({
           if(currentPageIndex + 1 === currentLPTypeForData.default.AllPages.length - 1) {
             $('#navigationNextBtn').addClass('displayNone');
           }
-          console.log('#############', currentLPTypeForData.default.AllPages[currentPageIndex + 1]);
-          console.log('#############', currentLPTypeForData.default.AllPages[currentPageIndex]);
+          // console.log('#############', currentLPTypeForData.default.AllPages[currentPageIndex + 1]);
+          // console.log('#############', currentLPTypeForData.default.AllPages[currentPageIndex]);
 
           $('#' + currentLPTypeForData.default.AllPages[currentPageIndex + 1] + '_MainDiv').addClass('displayBlock').removeClass('displayNone');
           $('#' + currentLPTypeForData.default.AllPages[currentPageIndex] + '_MainDiv').addClass('displayNone').removeClass('displayBlock');
@@ -1049,7 +1063,7 @@ const lendingProduct = React.createClass({
 
           //this is current
           $('#' + currentLPTypeForData.default.AllPages[currentPageIndex + 1] + '_NavBtn').addClass('backGroundBlueColor');
-          $('#' + simpleLPFields.default.AllPages[currentPageIndex + 1] + '_NavBtn').addClass('colorWhite');
+          $('#' + currentLPTypeForData.default.AllPages[currentPageIndex + 1] + '_NavBtn').addClass('colorWhite');
         }
         else {
           console.log('ERROR ERROR');
@@ -1286,11 +1300,6 @@ const lendingProduct = React.createClass({
     // load LP Fields
     let pickListValues;
 
-
-    // console.log(fieldList.default);
-    // console.log(type);
-
-
     if(fieldList.default[type].length > 0) {
 
       fieldList.default[type].map(function(eachField) {
@@ -1330,6 +1339,11 @@ const lendingProduct = React.createClass({
 
   createTheElement(type, objectData, wholeDatsOfThisType, thisVal) {
     // console.log('objectData', objectData);
+
+    console.log('!@!@@!@!@@!@!@!@!@@');
+    console.log(type);
+    console.log(wholeDatsOfThisType);
+    console.log('!@!@@!@!@@!@!@!@!@@');
 
     let buttonString = null;
     let labelForElement = null;
@@ -1384,31 +1398,45 @@ const lendingProduct = React.createClass({
       }
     }
     else {
-      if(objectData.element === "select" && wholeDatsOfThisType != undefined && type != "AccountingElements") {
-
-        let resultVal;
-        if(objectData.label) {
-          resultVal = thisVal.searchArray(wholeDatsOfThisType, objectData.label, 'label');
-        }
-        else {
-          resultVal = wholeDatsOfThisType;
-        }
-
-        let optionsForPickList;
-        if(resultVal) {
-          if(resultVal.picklist) {
-            optionsForPickList = thisVal.createOptionsForPickList(resultVal.picklist);
+      console.log(type);
+      if(objectData.element === "select" && wholeDatsOfThisType != undefined) {
+        if(type !== "AccountingElements_SimpleLP" && type !== "AccountingElements_LineOfCreditLP") {
+          let resultVal;
+          if(objectData.label) {
+            resultVal = thisVal.searchArray(wholeDatsOfThisType, objectData.label, 'label');
           }
           else {
-            optionsForPickList = thisVal.createOptionsForPickList(resultVal);
+            resultVal = wholeDatsOfThisType;
           }
-        }
 
-        finalElement += optionsForPickList;
+          let optionsForPickList;
+          if(resultVal) {
+            if(resultVal.picklist) {
+              optionsForPickList = thisVal.createOptionsForPickList(resultVal.picklist);
+            }
+            else {
+              optionsForPickList = thisVal.createOptionsForPickList(resultVal);
+            }
+          }
+
+          finalElement += optionsForPickList;
+          console.log('NOT INSIDE ADDING SELECT OPTIONS TO AccountingElements_SimpleLP');
+        }
+        else if(type === "AccountingElements_LineOfCreditLP" || type === "AccountingElements_SimpleLP") {
+          console.log('INSIDE ADDING SELECT OPTIONS TO AccountingElements_SimpleLP and AccountingElements_LineOfCreditLP');
+          finalElement += wholeDatsOfThisType;
+        }
       }
-      else if(objectData.element === "select" && wholeDatsOfThisType != undefined && type === "AccountingElements") {
-        finalElement += wholeDatsOfThisType;
-      }
+      // else if(objectData.element === "select" && wholeDatsOfThisType != undefined) {
+      //   if(type === "AccountingElements_LineOfCreditLP" || type !== "AccountingElements_SimpleLP") {
+      //     console.log('INSIDE ADDING SELECT OPTIONS TO AccountingElements_SimpleLP and AccountingElements_LineOfCreditLP');
+      //     finalElement += wholeDatsOfThisType;
+      //   }
+      // }
+      // else if(objectData.element === "select" && wholeDatsOfThisType != undefined && type === "AccountingElements_LineOfCreditLP") {
+      //   console.log('INSIDE ADDING SELECT OPTIONS TO AccountingElements_LineOfCreditLP');
+      //   finalElement += wholeDatsOfThisType;
+      // }
       finalElement += htmlEndElement;
       finalElement += "</div>";
     }
