@@ -1,7 +1,23 @@
 .DS_Store
+
+.DS_Store?
+
 .readme.md
+
 dist
-.gitignore
+
 node_modules
 
 backup_withoutChanges_lendingProduct.js
+
+lending_product_component_before_any_major_changes
+
+lendingProduct_Previous_Without_Dynamically_creating_buttons
+
+previous_component.js
+
+previous_reducer.js
+
+npm-debug.log
+
+
