@@ -3,12 +3,14 @@ var express = require('express');
 var webpack = require('webpack');
 var config = require('./webpack.config.dev');
 
+console.log('#####', config[0].output);
+
 var app = express();
 var compiler = webpack(config);
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
-  publicPath: config.output.publicPath
+  publicPath: config[0].output.publicPath
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));

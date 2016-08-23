@@ -6,7 +6,7 @@ const IndividualBatchJobs = React.createClass({
 
   getInitialState() {
     // FIRST
-    console.log('getInitialState');
+    // console.log('getInitialState in Child Component');
     return {
       "heading": this.props.heading,
       "tagline": this.props.tagline,
@@ -23,12 +23,12 @@ const IndividualBatchJobs = React.createClass({
 
   componentWillMount() {
     // SECOND
-    console.log('componentWillMount');
+    // console.log('componentWillMount in Child Component');
   },
 
   render() {
     // Third
-    console.log('RENDER in INDIVIDUAL BATCH JOB', this.state);
+    // console.log('RENDER in CHILD INDIVIDUAL BATCH JOB', this.state);
     let individualData = this.state;
     let submitId = "submitBtn_" + this.state.id;
     let submitName = "submitBtn_" + this.state.batch_job_className;
@@ -41,165 +41,150 @@ const IndividualBatchJobs = React.createClass({
 
     let messageText = this.state.nextJobMessage;
     return (
-        <div className="slds-card marginTop2Percent">
-           <div className="slds-card__header slds-grid">
-              <div className="slds-media slds-media--center slds-has-flexi-truncate">
-                 <div className="slds-media__body">
-                    <h3 className="slds-text-heading--small slds-truncate">{individualData.heading}</h3>
-                 </div>
-              </div>
-              <div className="slds-no-flex">
-                <button className="slds-button slds-button--neutral" name={submitName} ref={submitRef} id = {submitId} type="button" onClick={e => this.submitClick(e)}>Submit</button>
-              </div>
-           </div>
-           <div className="slds-card__body padding5Percentage backGroundWhiteColor">
-                <label className="slds-form-element__label" htmlFor={inputId}>
-                  {individualData.tagline}
-                </label>
-                <div className="slds-form-element__control">
-                  <input className="slds-input" type="time" id={inputId} name={inputName} ref={inputRef} onClick={e => this.valueOfTimeChanged(e)} defaultValue={inputValue} onFocus={e => this.valueOfTimeChanged(e)}></input>
-                </div>
-
-                <div className="slds-form-element__control">
-                  {messageText}
-                </div>
-           </div>
+      <div className="slds-card">
+        <div className="slds-card__header slds-grid">
+          <div className="slds-media slds-media--center slds-has-flexi-truncate">
+            <div className="slds-media__body">
+              <h3 className="slds-text-heading--small slds-truncate">{individualData.heading}</h3>
+            </div>
+          </div>
+          <div className="slds-no-flex">
+            <button className="slds-button slds-button--neutral" name={submitName} ref={submitRef} id = {submitId} type="button" onClick={e => this.submitClick(e)}>Submit</button>
+          </div>
         </div>
-      )
-    },
+        <div className="slds-card__body padding5Percentage backGroundWhiteColor">
+          <label className="slds-form-element__label" htmlFor={inputId}>
+            {individualData.tagline}
+          </label>
+          <div className="slds-form-element__control">
+            <input className="slds-input" type="time" id={inputId} name={inputName} ref={inputRef} onClick={e => this.valueOfTimeChanged(e)} defaultValue={inputValue} onFocus={e => this.valueOfTimeChanged(e)}></input>
+          </div>
 
-    valueOfTimeChanged(e) {
-      // console.log('CRAP CRAP CRAP', e.target.value.trim());
-      this.props.onValueChange(e.target.name);
-      if(e.target.value) {
-        $('#submitBtn_'+this.state.id).prop("disabled",false);
-      }
-      else {
-        $('#submitBtn_'+this.state.id).prop("disabled",true);
-      }
-    },
+          <div className="slds-form-element__control">
+            {messageText}
+          </div>
+        </div>
+      </div>
+    )
+  },
 
-    submitClick(e) {
-      // console.log($('#timeInput_'+this.state.id).val());
+  valueOfTimeChanged(e) {
+    // this.props.onValueChange(e.target.name);
+    this.props.callParentToPassElementId(e.target.name);
+    if(e.target.value) {
+      $('#submitBtn_'+this.state.id).prop("disabled",false);
+    }
+    else {
+      $('#submitBtn_'+this.state.id).prop("disabled",true);
+    }
+  },
 
-      let currentTime = $('#timeInput_'+this.state.id).val();
-      // console.log("timeval: " + currentTime)
+  submitClick(e) {
+    // console.log($('#timeInput_'+this.state.id).val());
 
-      let jobName = this.state.batch_job_className;
-      let id_obj = this.state.batch_job_idObj;
+    console.log('SUBMIT CLICK, WHY MANY TIMES?', e.target.id);
 
-      let timeval_splits = currentTime.split(":");
-      let h = timeval_splits[0];
-      let m = timeval_splits[1];
-      let s = 0;
-      let crontime = s + " " + parseInt(m) + " " + parseInt(h) + " ? * MON-SUN *";
-      // console.log('crontime', crontime);
-      if(this.state.idForAborting) {
-        this.props.saveJob(this.state.idForAborting, crontime, jobName);
-      }
-      else {
-        this.props.saveJob(null, crontime, jobName);
-      }
+    let currentTime = $('#timeInput_'+this.state.id).val();
+    // console.log("timeval: " + currentTime)
 
-    },
+    let jobName = this.state.batch_job_className;
+    let id_obj = this.state.batch_job_idObj;
 
-    handleChangeforEveryElement: function(e) {
-      this.props.onValueChange('fuck this');
-    },
-
-    componentDidMount() {
-      // FOURTH
-      console.log('componentDidMount');
-      // $('#submitBtn_'+this.state.id).prop("disabled",true);
-    },
-
-    componentWillReceiveProps(NextProps) {
-      // Fifth
-      // console.log('componentWillReceiveProps', NextProps);
-      // handle Save click return promise here
-      // in that update state
-
-      if(NextProps.returnValueAfterSavingBatchJob) {
-        NextProps.returnValueAfterSavingBatchJob.then(function(data) {
-          console.log(data.resultAfterSave[1]);
-          console.log(this.state.batch_job_className);
-          if(this.state.batch_job_className === data.resultAfterSave[1]) {
-
-            location.reload();
-
-            // let changedVal = $("#timeInput_" + this.state.id).val();
-            // console.log(changedVal);
-            //
-            // let idForAborting = data.resultAfterSave[0];
-            //
-            // let message = "The next <b>" + data.resultAfterSave[1] + "</b> Batch Job is scheduled to run on <b>" + changedVal;
-            //
-            // this.setState({
-            //   "heading": this.state.heading,
-            //   "tagline": this.state.tagline,
-            //   "id": this.state.id,
-            //   "batch_job_className": this.state.batch_job_className,
-            //   "batch_job_idObj": this.state.batch_job_idObj,
-            //   "value": changedVal,
-            //   "nextJobMessage": this.props.nextJobMessage,
-            //   "idForAborting": idForAborting,
-            //   "isLoading" : false
-            // })
-          }
-          // console.log('JINTHAAA JINTHAA', this.state);
-        }.bind(this));
-      }
-
-    },
-
-    shouldComponentUpdate(nextProps, nextState) {
-      // Sixth
-      console.log('shouldComponentUpdate');
-      return this.state.isLoading;
-    },
-
-    componentWillUnmount() {
-      // LAST
-      console.log('componentWillUnmount');
+    let timeval_splits = currentTime.split(":");
+    let h = timeval_splits[0];
+    let m = timeval_splits[1];
+    let s = 0;
+    let crontime = s + " " + parseInt(m) + " " + parseInt(h) + " ? * MON-SUN *";
+    console.log('crontime', crontime);
+    if(this.state.idForAborting) {
+      this.props.saveJob(this.state.idForAborting, crontime, jobName);
+    }
+    else {
+      this.props.saveJob(null, crontime, jobName);
     }
 
-  });
+    // if(this.state.idForAborting) {
+    //   this.props.onSaveConfirm(this.state.idForAborting, crontime, jobName);
+    // }
+    // else {
+    //   this.props.onSaveConfirm(null, crontime, jobName);
+    // }
 
-  export default IndividualBatchJobs;
+  },
+
+  handleChangeforEveryElement: function(e) {
+    this.props.onValueChange('fuck this');
+  },
+
+  componentDidMount() {
+    // FOURTH
+    // console.log('componentDidMount');
+    // $('#submitBtn_'+this.state.id).prop("disabled",true);
+  },
+
+  componentWillReceiveProps(NextProps) {
+
+    console.log('INSIDE COMPONENT WILL RECEIVE PROPS IN CHILD', NextProps);
+
+    // Fifth
+    // handle Save click return promise here
+    // in that update state
+
+    if(NextProps.returnValueAfterSavingBatchJob) {
+      NextProps.returnValueAfterSavingBatchJob.then(function(data) {
+        console.log('INSIDE SAVE CLICK PROMISE HANDLER IN CHILD', data);
+        console.log(data.resultAfterSave[1]);
+        console.log(this.state.batch_job_className);
+        if(this.state.batch_job_className === data.resultAfterSave[1]) {
+
+          location.reload();
+
+          // console.log('THIS . STATE', this.state);
+          //
+          // let selectedTime = $('#timeInput_'+this.state.id).val();
+          //
+          // this.props.onSaveConfirm(true, this.state.id, selectedTime, data.resultAfterSave);
 
 
 
-  // <div className="slds-card">
-  //    <div className="slds-card__header slds-grid">
-  //       <div className="slds-media slds-media--center slds-has-flexi-truncate" >
-  //          <div className="slds-media__body" >
-  //             <h2 className="slds-text-heading--small slds-truncate">{individualData.heading}</h2>
-  //          </div>
-  //       </div>
-  //    </div>
-  //    <div className="slds-card__body" id="astp_product_content_ba">
-  //       <div className="batj_warning displayNone" id="batj_warning">
-  //          We only support 1 scheduled Batch Job for Start of Day Job. Please remove all scheduled jobs which were configured outside the installer before scheduling it here.
-  //       </div>
-  //       <div className="batj_content_area" >
-  //          <div className="batj_content" id="batj_content_ba">
-  //             <div className="slds-form-element helper_field">
-  //                <span className="slds-form-element__help displayNone">This field is required</span>
-  //                <label className="slds-form-element__label" for="loan__eodj_time" >
-  //                  {individualData.tagline}
-  //                </label>
-  //                <div className="slds-form-element__control">
-  //                  <input className="slds-input" type="time" id="loan__eodj_time">
-  //                  </input>
-  //               </div>
-  //             </div>
-  //          </div>
-  //          <div id="scheduled_info"></div>
-  //       </div>
-  //       <div className="batj_buttons_area">
-  //         <button className="slds-button slds-button--neutral btn batj_btn" id="batj_submit">
-  //           Submit
-  //         </button>
-  //       </div>
-  //    </div>
-  // </div>
+          // this.props.onSaveConfirm(true);
+
+          // let changedVal = $("#timeInput_" + this.state.id).val();
+          // console.log(changedVal);
+          //
+          // let idForAborting = data.resultAfterSave[0];
+          //
+          // let message = "The next <b>" + data.resultAfterSave[1] + "</b> Batch Job is scheduled to run on <b>" + changedVal;
+          //
+          // this.setState({
+          //   "heading": this.state.heading,
+          //   "tagline": this.state.tagline,
+          //   "id": this.state.id,
+          //   "batch_job_className": this.state.batch_job_className,
+          //   "batch_job_idObj": this.state.batch_job_idObj,
+          //   "value": changedVal,
+          //   "nextJobMessage": this.props.nextJobMessage,
+          //   "idForAborting": idForAborting,
+          //   "isLoading" : false
+          // })
+        }
+        // console.log('JINTHAAA JINTHAA', this.state);
+      }.bind(this));
+    }
+
+  },
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // Sixth
+    // console.log('shouldComponentUpdate in Child Component');
+    return this.state.isLoading;
+  },
+
+  componentWillUnmount() {
+    // LAST
+    // console.log('componentWillUnmount in Child Component');
+  }
+
+});
+
+export default IndividualBatchJobs;

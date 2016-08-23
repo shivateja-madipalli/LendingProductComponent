@@ -458,7 +458,7 @@ const lendingProduct = React.createClass({
 
       return (
         <div>
-          <div id="leftDiv" className="">
+          <div id="leftDiv" className="floatLeft width60">
             <div id="exisitingLendingProductsTable" className="width100">
               <table className="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal ">
                 <thead>
@@ -469,7 +469,7 @@ const lendingProduct = React.createClass({
                       </div>
                     </th>
                     <th className="slds-is-sortable width50" scope="col">
-                      <div className="slds-truncate floatLeft paddingTop2Point1" title="Lending Product Type">
+                      <div className="slds-truncate floatLeft paddingTop1Point5" title="Lending Product Type">
                         Lending Product Type
                       </div>
                       <div className="floatRight">
@@ -498,9 +498,6 @@ const lendingProduct = React.createClass({
               </table>
             </div>
             <div id="ModalForCreatingNewLendingProduct" className="width100">
-
-              <button id="goBackToTable" className="slds-button slds-button--neutral marginZero minWidth12Point5 marginLeftZero borderRadiusZero displayNone" onClick={e => this.goBackButtonClick(e)}> Go Back  </button>
-
               <div id="AmortizationLendingProductCmpMainDiv" className="displayNone">
               </div>
               <div id="LineOfCreditLendingProductCmpMainDiv" className="displayNone">
@@ -586,6 +583,18 @@ const lendingProduct = React.createClass({
             </div>
           </div>
 
+          <div id="rightDiv" className="slds-modal--form maxWidth40rem floatRight width35">
+            <div id="rightDiv_TOP" className="slds-modal__header">
+              <p className="slds-text-heading--medium slds-truncate" title="Exisiting Lending Product">Help Text</p>
+            </div>
+            <div className="slds-card">
+              <div className="slds-card__body" id="simple_loan_product_help_content">
+                <div id="HelpTextValue">
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
       )
@@ -648,7 +657,6 @@ const lendingProduct = React.createClass({
       let heading = e.target.name.replace("CmpMainDiv","");
 
       $('#creatingNewLendingProductHeading_').text(heading);
-      $('#goBackToTable').removeClass('displayNone');
 
     }
     else if(e.target.id === "lineOfCreditLP") {
@@ -691,15 +699,6 @@ const lendingProduct = React.createClass({
       currentLPType: e.target.id
     })
 
-  },
-
-  goBackButtonClick(e) {
-    $('#exisitingLendingProductsTable').removeClass('displayNone');
-    $('#LineOfCreditLendingProductCmpMainDiv').addClass('displayNone');
-    $('#AmortizationLendingProductCmpMainDiv').addClass('displayNone');
-    $('#SimpleLendingProductCmpMainDiv').addClass('displayNone');
-
-    $('#goBackToTable').addClass('displayNone');
   },
 
   // onChange event for All Elements
@@ -844,15 +843,11 @@ const lendingProduct = React.createClass({
 
     // get the help text from state.existinglendingProducts.HelpTextData and populate it in help text div
 
-    // let helpTextFound = this.getElementHelpText(e.target.id, this);
+    let helpTextFound = this.getElementHelpText(e.target.id, this);
     // console.log(helpTextFound);
-    // if(helpTextFound[0].helpText) {
-    //   $('#HelpTextValue').text(helpTextFound[0].helpText);
-    // }
-
-    // pass Id To Parent Component to display HelpText
-    this.props.callParentToPassElementId(e.target.id);
-
+    if(helpTextFound[0].helpText) {
+      $('#HelpTextValue').text(helpTextFound[0].helpText);
+    }
     if(e.target.id === "loan__protect_enabled__c") {
       if($('#' + e.target.id).is(':checked')) {
         $('#loan__Protect_Type__c').removeClass('displayNone');

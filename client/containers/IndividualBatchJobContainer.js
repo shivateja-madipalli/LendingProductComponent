@@ -5,7 +5,7 @@ import {saveJob} from '../actions/batchJobsActions';
 
 
 function mapStateToProps(globalState) {
-  console.log('mapStateToProps in Individual Batch Job Container', globalState);
+  console.log('mapStateToProps in CHILD COMPONENT', globalState);
   return {
     returnValueAfterSavingBatchJob : globalState.batchJobReducer.returnValueAfterSave
   };
