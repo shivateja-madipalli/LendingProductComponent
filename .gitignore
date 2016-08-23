@@ -6,6 +6,8 @@
 
 dist
 
+temp_
+
 node_modules
 
 backup_withoutChanges_lendingProduct.js
