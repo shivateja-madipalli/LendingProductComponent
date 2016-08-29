@@ -113,70 +113,23 @@ const IndividualBatchJobs = React.createClass({
   },
 
   handleChangeforEveryElement: function(e) {
-
+    
   },
 
   componentDidMount() {
     // FOURTH
-    // console.log('componentDidMount');
+    console.log('COMPONENT DID UPDATE IN FRACTIONALIZATION');
     // $('#submitBtn_'+this.state.id).prop("disabled",true);
   },
 
   componentWillReceiveProps(NextProps) {
 
-    console.log('INSIDE COMPONENT WILL RECEIVE PROPS IN CHILD', NextProps);
-
-    // Fifth
-    // handle Save click return promise here
-    // in that update state
-
-    if(NextProps.returnValueAfterSavingBatchJob) {
-      NextProps.returnValueAfterSavingBatchJob.then(function(data) {
-        console.log('INSIDE SAVE CLICK PROMISE HANDLER IN CHILD', data);
-        console.log(data.resultAfterSave[1]);
-        console.log(this.state.batch_job_className);
-        if(this.state.batch_job_className === data.resultAfterSave[1]) {
-
-          location.reload();
-
-          // console.log('THIS . STATE', this.state);
-          //
-          // let selectedTime = $('#timeInput_'+this.state.id).val();
-          //
-          // this.props.onSaveConfirm(true, this.state.id, selectedTime, data.resultAfterSave);
-
-
-
-          // this.props.onSaveConfirm(true);
-
-          // let changedVal = $("#timeInput_" + this.state.id).val();
-          // console.log(changedVal);
-          //
-          // let idForAborting = data.resultAfterSave[0];
-          //
-          // let message = "The next <b>" + data.resultAfterSave[1] + "</b> Batch Job is scheduled to run on <b>" + changedVal;
-          //
-          // this.setState({
-          //   "heading": this.state.heading,
-          //   "tagline": this.state.tagline,
-          //   "id": this.state.id,
-          //   "batch_job_className": this.state.batch_job_className,
-          //   "batch_job_idObj": this.state.batch_job_idObj,
-          //   "value": changedVal,
-          //   "nextJobMessage": this.props.nextJobMessage,
-          //   "idForAborting": idForAborting,
-          //   "isLoading" : false
-          // })
-        }
-        // console.log('JINTHAAA JINTHAA', this.state);
-      }.bind(this));
-    }
-
+    console.log('INSIDE COMPONENT WILL RECEIVE PROPS IN FRACTIONALIZATION', NextProps);
   },
 
   shouldComponentUpdate(nextProps, nextState) {
     // Sixth
-    // console.log('shouldComponentUpdate in Child Component');
+    console.log('SHOULD COMPONENT UPDATE IN FRACTIONALIZATION');
     return this.state.isLoading;
   },
 

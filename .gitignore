@@ -6,7 +6,7 @@
 
 dist
 
-temp_
+temp_/*
 
 node_modules
 
